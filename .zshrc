@@ -13,3 +13,5 @@ zplug "romkatv/powerlevel10k", as:theme, depth:1
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 alias dotfiles='git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
+
+zplug load
