@@ -1,0 +1,40 @@
+Config {
+   position =      Top
+,  font =         "xft:Bitstream Vera Sans Mono:Bold:size=10:antialias=true"
+,  sepChar =  "%"       -- delineator between plugin names and straight text
+,  alignSep = "}{"      -- separator between left-right alignment
+,  template = "%memory% | %multicpu% | %dynnetwork% }{ %date%"
+,  commands = 
+        [
+        -- memory usage monitor
+         Run Memory         [ "--template" ,"Mem: <usedratio>%"
+                             , "--Low"      , "20"        -- units: %
+                             , "--High"     , "90"        -- units: %
+                             , "--low"      , "darkgreen"
+                             , "--normal"   , "darkorange"
+                             , "--high"     , "darkred"
+                             ] 50
+        -- network activity monitor (dynamic interface resolution)
+        , Run DynNetwork     [ "--template" , "<dev>: <tx>kB/s , <rx>kB/s"
+                             , "--Low"      , "1000"       -- units: B/s
+                             , "--High"     , "5000"       -- units: B/s
+                             , "--low"      , "darkgreen"
+                             , "--normal"   , "darkorange"
+                             , "--high"     , "darkred"
+                             ] 10
+
+        -- cpu activity monitor
+        , Run MultiCpu       [ "--template" , "Cpu: <total0>%, <total1>%, <total2>%, <total3>%"
+                             , "--Low"      , "50"         -- units: %
+                             , "--High"     , "85"         -- units: %
+                             , "--low"      , "darkgreen"
+                             , "--normal"   , "darkorange"
+                             , "--high"     , "darkred"
+                             ] 50
+
+        -- time and date indicator 
+        --   (%e = day of month, %b month name %a = day of week, %r = 12 hour format)
+        , Run Date           "<fc=#ABABAB>%e %b %Y (%a) %r</fc>" "date" 10
+
+        ]
+}
