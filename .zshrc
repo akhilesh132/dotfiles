@@ -7,14 +7,20 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
 
-source ~/.zplug/init.zsh
-
-zplug "romkatv/powerlevel10k", as:theme, depth:1
-
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-alias dotfiles='git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
+# Zplug - next gen zsh plugin manager
+source ~/.zplug/init.zsh
 
+zplug "romkatv/powerlevel10k", as:theme, depth:1
+zplug "plugins/fasd", from:oh-my-zsh
+zplug "plugins/zsh-interactive-cd", from:oh-my-zsh
+zplug "plugins/emoji", from:oh-my-zsh
 zplug load
 
+alias dotfiles='git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
+
+# fzf integration
+# https://github.com/junegunn/fzf
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
