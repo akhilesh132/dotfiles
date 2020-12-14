@@ -1,35 +1,35 @@
 Config {
    position =      Top
 ,  font =         "xft:Bitstream Vera Sans Mono:Bold:size=10:antialias=true"
+,  iconRoot =     "/home/akhilesh/.repo/xpm-status-icons/icons"
 ,  sepChar =  "%"       -- delineator between plugin names and straight text
 ,  alignSep = "}{"      -- separator between left-right alignment
 ,  template = "%memory% | %multicpu% | %dynnetwork% }{ %date%"
 ,  commands = 
         [
         -- memory usage monitor
-         Run Memory         [ "--template" ,"Mem: <usedratio>%"
+         Run Memory         [ "-t", "<icon=ram/ram_2.xpm/> <usedratio>%"
                              , "--Low"      , "20"        -- units: %
                              , "--High"     , "90"        -- units: %
-                             , "--low"      , "darkgreen"
-                             , "--normal"   , "darkorange"
                              , "--high"     , "darkred"
+                             , "--width"    , "2"
                              ] 50
         -- network activity monitor (dynamic interface resolution)
-        , Run DynNetwork     [ "--template" , "<dev>: <tx>kB/s , <rx>kB/s"
+        , Run DynNetwork     [ "-t" , "<dev>: <icon=network/tx/network_tx_0.xpm/><tx>kB/s <icon=network/rx/network_rx_0.xpm/><rx>kB/s"
                              , "--Low"      , "1000"       -- units: B/s
                              , "--High"     , "5000"       -- units: B/s
                              , "--low"      , "darkgreen"
                              , "--normal"   , "darkorange"
                              , "--high"     , "darkred"
+                             , "--width"    , "3"
                              ] 10
 
         -- cpu activity monitor
-        , Run MultiCpu       [ "--template" , "Cpu: <total0>%, <total1>%, <total2>%, <total3>%"
+        , Run MultiCpu       [ "-t" , "<icon=cpu/cpu_1.xpm/> <total0>% <total1>% <total2>% <total3>%"
                              , "--Low"      , "50"         -- units: %
                              , "--High"     , "85"         -- units: %
-                             , "--low"      , "darkgreen"
-                             , "--normal"   , "darkorange"
                              , "--high"     , "darkred"
+                             , "--width"    , "2"
                              ] 50
 
         -- time and date indicator 
