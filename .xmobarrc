@@ -8,19 +8,16 @@ Config {
 ,  commands = 
         [
         -- memory usage monitor
-         Run Memory         [ "-t", "<icon=ram/ram_2.xpm/> <usedratio>%"
+         Run Memory         [ "-t", "<icon=extra/memory-icon_24.xpm/> <usedratio>%"
                              , "--Low"      , "20"        -- units: %
                              , "--High"     , "90"        -- units: %
                              , "--high"     , "darkred"
                              , "--width"    , "2"
                              ] 50
         -- network activity monitor (dynamic interface resolution)
-        , Run DynNetwork     [ "-t" , "<icon=extra/network-icon_24.xpm/> <dev>: <icon=network/tx/network_tx_0.xpm/><tx>kB/s <icon=network/rx/network_rx_0.xpm/><rx>kB/s"
+        , Run DynNetwork     [ "-t" , "<icon=extra/wifi-icon_16.xpm/> <dev>: <icon=network/tx/network_tx_0.xpm/><tx> kB/s <icon=network/rx/network_rx_0.xpm/><rx> kB/s"
                              , "--Low"      , "1000"       -- units: B/s
                              , "--High"     , "5000"       -- units: B/s
-                             , "--low"      , "darkgreen"
-                             , "--normal"   , "darkorange"
-                             , "--high"     , "darkred"
                              , "--width"    , "3"
                              ] 10
 
@@ -34,7 +31,7 @@ Config {
 
         -- time and date indicator 
         --   (%e = day of month, %b month name %a = day of week, %r = 12 hour format)
-        , Run Date           "<fc=#ABABAB>%e %b %Y (%a) %r</fc>" "date" 10
+        , Run Date           "<icon=extra/calendar-clock-icon_16.xpm/> <fc=#ABABAB>%e %b %Y (%a) %r</fc>" "date" 10
 
         ]
 }
