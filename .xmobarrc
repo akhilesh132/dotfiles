@@ -1,7 +1,7 @@
 Config {
    position =      Top
 ,  font =         "xft:Bitstream Vera Sans Mono:Bold:size=10:antialias=true"
-,  iconRoot =     "/home/akhilesh/.repo/xpm-status-icons/icons"
+,  iconRoot =     "/home/akhilesh/.xmobar-icons/icons"
 ,  sepChar =  "%"       -- delineator between plugin names and straight text
 ,  alignSep = "}{"      -- separator between left-right alignment
 ,  template = "%memory% | %multicpu% | %dynnetwork% }{ %date%"
@@ -15,7 +15,7 @@ Config {
                              , "--width"    , "2"
                              ] 50
         -- network activity monitor (dynamic interface resolution)
-        , Run DynNetwork     [ "-t" , "<dev>: <icon=network/tx/network_tx_0.xpm/><tx>kB/s <icon=network/rx/network_rx_0.xpm/><rx>kB/s"
+        , Run DynNetwork     [ "-t" , "<icon=extra/network-icon_24.xpm/> <dev>: <icon=network/tx/network_tx_0.xpm/><tx>kB/s <icon=network/rx/network_rx_0.xpm/><rx>kB/s"
                              , "--Low"      , "1000"       -- units: B/s
                              , "--High"     , "5000"       -- units: B/s
                              , "--low"      , "darkgreen"
