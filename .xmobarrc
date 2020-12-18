@@ -1,10 +1,11 @@
 Config {
    position =      Top
+,  bgColor  =      "#151515"
 ,  font =         "xft:Bitstream Vera Sans Mono:Bold:size=10:antialias=true"
 ,  iconRoot =     "/home/akhilesh/.xmobar-icons/icons"
 ,  sepChar =  "%"       -- delineator between plugin names and straight text
 ,  alignSep = "}{"      -- separator between left-right alignment
-,  template = "%memory% | %multicpu% | %dynnetwork% }{ %date%"
+,  template = "%disku% | %memory% | %multicpu% | %dynnetwork% }{ %date%"
 ,  commands = 
         [
         -- memory usage monitor
@@ -15,16 +16,16 @@ Config {
                              , "--width"    , "2"
                              ] 50
         -- network activity monitor (dynamic interface resolution)
-        , Run DynNetwork     [ "-t" , "<icon=extra/wifi-icon_16.xpm/> <dev>: <icon=network/tx/network_tx_0.xpm/><tx> kB/s <icon=network/rx/network_rx_0.xpm/><rx> kB/s"
+        , Run DynNetwork     [ "-t" , "<icon=extra/wifi-icon_16.xpm/> <dev>: <icon=extra/down_arrow_1_14.xpm/><tx> kB/s <icon=extra/up_arrow_1_14.xpm/><rx> kB/s"
                              , "--Low"      , "1000"       -- units: B/s
                              , "--High"     , "5000"       -- units: B/s
                              , "--width"    , "3"
                              ] 10
 
         -- cpu activity monitor
-        , Run MultiCpu       [ "-t" , "<icon=cpu/cpu_1.xpm/> <total0>% <total1>% <total2>% <total3>%"
-                             , "--Low"      , "50"         -- units: %
-                             , "--High"     , "85"         -- units: %
+        , Run MultiCpu       [ "-t" , "<icon=extra/cpu-icon_24.xpm/> <total0>% <total1>% <total2>% <total3>%"
+                             , "--Low"      , "50" , "--low", "grey"
+                             , "--High"     , "85"        
                              , "--high"     , "darkred"
                              , "--width"    , "2"
                              ] 50
@@ -33,5 +34,9 @@ Config {
         --   (%e = day of month, %b month name %a = day of week, %r = 12 hour format)
         , Run Date           "<icon=extra/calendar-clock-icon_16.xpm/> <fc=#ABABAB>%e %b %Y (%a) %r</fc>" "date" 10
 
+        -- Disk usage 
+        , Run DiskU [("/","<icon=extra/harddisk-icon_16.xpm/> /:<usedp>% # <used>/<size> ")] 
+                    [ "-L","50", "-l", "lightgreen"]
+                    300
         ]
 }
