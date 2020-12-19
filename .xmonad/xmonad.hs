@@ -7,7 +7,7 @@ import XMonad.Util.Run(spawnPipe)
 import XMonad.Wallpaper
 
 main = do
-   -- xmproc <- spawnPipe "xmobar"
+   xmproc <- spawnPipe "xmobar"
    setRandomWallpaper [ "$HOME/Wallpapers" ]
    xmonad $docks desktopConfig
       { layoutHook = myLayoutHook
