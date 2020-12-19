@@ -8,19 +8,18 @@ Config {
 ,  template = "%disku% | %memory% | %multicpu% | %dynnetwork% }{ %date%"
 ,  commands = 
         [
+        -- Disk usage 
+         Run DiskU          [("/","<icon=extra/nixos_16.xpm/> NixOS | <icon=extra/harddisk-icon_16.xpm/> /:<usedp>% # <used>/<size> ")] 
+                             [ "-L","50", "-l", "lightgreen"]
+                             300
+
         -- memory usage monitor
-         Run Memory         [ "-t", "<icon=extra/memory-icon_24.xpm/> <usedratio>%"
+       , Run Memory          [ "-t", "<icon=extra/memory-icon_24.xpm/> <usedratio>%"
                              , "--Low"      , "20"        -- units: %
                              , "--High"     , "90"        -- units: %
                              , "--high"     , "darkred"
                              , "--width"    , "2"
                              ] 50
-        -- network activity monitor (dynamic interface resolution)
-        , Run DynNetwork     [ "-t" , "<icon=extra/wifi-icon_16.xpm/> <dev>: <icon=extra/down_arrow_1_14.xpm/><tx> kB/s <icon=extra/up_arrow_1_14.xpm/><rx> kB/s"
-                             , "--Low"      , "1000"       -- units: B/s
-                             , "--High"     , "5000"       -- units: B/s
-                             , "--width"    , "3"
-                             ] 10
 
         -- cpu activity monitor
         , Run MultiCpu       [ "-t" , "<icon=extra/cpu-icon_24.xpm/> <total0>% <total1>% <total2>% <total3>%"
@@ -30,13 +29,16 @@ Config {
                              , "--width"    , "2"
                              ] 50
 
+        -- network activity monitor (dynamic interface resolution)
+        , Run DynNetwork     [ "-t" , "<icon=extra/wifi-icon_16.xpm/> <dev>: <icon=extra/down_arrow_1_14.xpm/><tx> kB/s <icon=extra/up_arrow_1_14.xpm/><rx> kB/s"
+                             , "--Low"      , "1000"       -- units: B/s
+                             , "--High"     , "5000"       -- units: B/s
+                             , "--width"    , "3"
+                             ] 10
+
         -- time and date indicator 
         --   (%e = day of month, %b month name %a = day of week, %r = 12 hour format)
         , Run Date           "<icon=extra/calendar-clock-icon_16.xpm/> <fc=#ABABAB>%e %b %Y (%a) %r</fc>" "date" 10
 
-        -- Disk usage 
-        , Run DiskU [("/","<icon=extra/harddisk-icon_16.xpm/> /:<usedp>% # <used>/<size> ")] 
-                    [ "-L","50", "-l", "lightgreen"]
-                    300
         ]
 }
