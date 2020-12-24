@@ -24,7 +24,9 @@ main = do
 
 myBorderWidth = 1
 
-myLayoutHook =  smartBorders $ avoidStruts $ layoutHook defaultConfig
+myLayoutHook =  smartBorders . avoidStruts 
+                $ spacingRaw True (Border 0 5 0 5) True (Border 5 0 5 0) True 
+                $ layoutHook def
 
 myManageHook = composeAll [
     manageDocks,
