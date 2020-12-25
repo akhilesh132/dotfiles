@@ -1,16 +1,17 @@
 Config {
-   position =      Top
+   position = Static { xpos = 0 , ypos = 0, width = 1920, height = 20 }
+,  alpha = 190
 ,  bgColor  =      "#151515"
 ,  font =         "xft:Bitstream Vera Sans Mono:Bold:size=10:antialias=true"
 ,  iconRoot =     "/home/akhilesh/.xmobar-icons/icons"
 ,  sepChar =  "%"       -- delineator between plugin names and straight text
 ,  alignSep = "}{"      -- separator between left-right alignment
-,  template = "%disku% | %memory% | %multicpu% | %dynnetwork% }{ %date%"
+,  template = "<icon=extra/nixos_16.xpm/> %uname% %date%   %disku%  %memory%  %multicpu%  %dynnetwork% }{  "
 ,  commands = 
         [
         -- Disk usage 
-         Run DiskU          [("/","<icon=extra/nixos_16.xpm/> NixOS | <icon=extra/harddisk-icon_16.xpm/> /:<usedp>% # <used>/<size> ")] 
-                             [ "-L","50", "-l", "lightgreen"]
+         Run DiskU          [("/","<icon=extra/harddisk-icon_16.xpm/> /: <usedp>%")] 
+                             [ "-L","50", "-l", "grey"]
                              300
 
         -- memory usage monitor
@@ -22,7 +23,7 @@ Config {
                              ] 50
 
         -- cpu activity monitor
-        , Run MultiCpu       [ "-t" , "<icon=extra/cpu-icon_24.xpm/> <total0>% <total1>% <total2>% <total3>%"
+        , Run MultiCpu       [ "-t" , "<icon=extra/cpu-icon_24.xpm/><total>%"
                              , "--Low"      , "50" , "--low", "grey"
                              , "--High"     , "85"        
                              , "--high"     , "darkred"
@@ -39,6 +40,8 @@ Config {
         -- time and date indicator 
         --   (%e = day of month, %b month name %a = day of week, %r = 12 hour format)
         , Run Date           "<icon=extra/calendar-clock-icon_16.xpm/> <fc=#ABABAB>%e %b %Y (%a) %r</fc>" "date" 10
+
+         , Run Com "uname" ["-s","-r"] "" 0
 
         ]
 }
