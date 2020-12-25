@@ -10,7 +10,7 @@ import XMonad.Util.Run(spawnPipe)
 import XMonad.Wallpaper
 
 main = do
-   --xmproc <- spawnPipe "xmobar"
+   xmproc <- spawnPipe myBar
    setRandomWallpaper [ "$HOME/Wallpapers" ]
    xmonad $docks desktopConfig
       { borderWidth = myBorderWidth
@@ -22,17 +22,24 @@ main = do
       , workspaces = myWorkspaces
       }
 
+myBar = "xmobar"
+
 myBorderWidth = 1
 
-myLayoutHook =  smartBorders . avoidStruts 
-                $ spacingRaw True (Border 0 5 0 5) True (Border 5 0 5 0) True 
-                $ layoutHook def
+myLayoutHook =  smartBorders . avoidStruts $
+                spacingRaw True (Border 0 5 0 5) True (Border 5 0 5 0) True $
+                Tall 1 (3/100) (1/2) ||| Full
 
 myManageHook = composeAll [
     manageDocks,
     isFullscreen --> doFullFloat,
-    className =? "Mpv" --> doFloat,
+    floatingRule,
     manageHook defaultConfig
+ ] 
+
+floatingRule = composeAll [
+    className =? "mpv" --> doFloat,
+    className =? "guake" --> doFloat
  ]
 
 myHandleEventHook = fullscreenEventHook
