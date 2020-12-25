@@ -26,9 +26,12 @@ myBar = "xmobar"
 
 myBorderWidth = 1
 
-myLayoutHook =  smartBorders . avoidStruts $
-                spacingRaw True (Border 0 5 0 5) True (Border 5 0 5 0) True $
-                Tall 1 (3/100) (1/2) ||| Full
+myLayoutHook =  spacingRaw True (Border 0 5 0 5) True (Border 5 0 5 0) True $
+                tallLayout ||| fullLayout ||| bottomLayout
+
+tallLayout = smartBorders . avoidStruts $ Tall 1 (3/100) (1/2)
+bottomLayout = smartBorders . avoidStruts $ Mirror( Tall 1 (3/100) (1/2))
+fullLayout = noBorders Full
 
 myManageHook = composeAll [
     manageDocks,
