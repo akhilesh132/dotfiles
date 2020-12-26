@@ -1,0 +1,3 @@
+set nu   " show line number"
+set rnu  " show relative line number"
+syntax on
