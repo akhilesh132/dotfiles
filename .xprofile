@@ -1,0 +1,14 @@
+# Trayer as Standalone tray
+trayer --edge top --align right --iconspacing 10 --height 20 --width 20 --margin 0 --transparent true --alpha 65 --SetDockType true  --SetPartialStrut false  --tint 0x151515 &
+
+# Pulse audio tray
+pasystray &
+
+# bluetooth applet
+blueman-applet &
+
+# network manager applet
+nm-applet &
+
+# drop down terminal
+guake &
