@@ -1,5 +1,5 @@
 Config {
-   position = Static { xpos = 0 , ypos = 0, width = 1920, height = 20 }
+   position = Static { xpos = 0 , ypos = 0, width = 1550, height = 20 }
 ,  alpha = 190
 ,  bgColor  =      "#151515"
 ,  font =         "xft:Bitstream Vera Sans Mono:Bold:size=10:antialias=true"
@@ -16,25 +16,22 @@ Config {
 
         -- memory usage monitor
        , Run Memory          [ "-t", "<icon=extra/memory-icon_24.xpm/> <usedratio>%"
-                             , "--Low"      , "20"        -- units: %
-                             , "--High"     , "90"        -- units: %
-                             , "--high"     , "darkred"
-                             , "--width"    , "2"
+                             , "-L", "20", "-l", "grey" , "-H", "90", "-h", "darkred"
+                             , "-w", "2"
                              ] 50
 
         -- cpu activity monitor
         , Run MultiCpu       [ "-t" , "<icon=extra/cpu-icon_24.xpm/><total>%"
-                             , "--Low"      , "50" , "--low", "grey"
-                             , "--High"     , "85"        
-                             , "--high"     , "darkred"
-                             , "--width"    , "2"
+                             , "-L", "50", "-l", "grey", "-H", "85", "-h", "darkred"
+                             , "-w",  "2"
                              ] 50
 
         -- network activity monitor (dynamic interface resolution)
-        , Run DynNetwork     [ "-t" , "<icon=extra/wifi-icon_16.xpm/> <dev>: <icon=extra/down_arrow_1_14.xpm/><tx> kB/s <icon=extra/up_arrow_1_14.xpm/><rx> kB/s"
-                             , "--Low"      , "1000"       -- units: B/s
-                             , "--High"     , "5000"       -- units: B/s
-                             , "--width"    , "3"
+        -- threshold units: B/s
+        , Run DynNetwork     [ "-t" , "<icon=extra/wifi-icon_16.xpm/><up> <dev>: <icon=extra/down_arrow_1_14.xpm/><tx> kB/s <icon=extra/up_arrow_1_14.xpm/><rx> kB/s"
+                             , "-L", "1000", "-H", "5000"
+                             , "-w", "3"
+                             , "--", "--devices", "wlp6s0,enp7s0"
                              ] 10
 
         -- time and date indicator 
