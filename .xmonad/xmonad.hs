@@ -8,6 +8,7 @@ import XMonad.Layout.NoBorders (noBorders, smartBorders)
 import XMonad.Layout.Spacing
 import XMonad.Util.Run(spawnPipe, hPutStrLn)
 import XMonad.Util.SpawnOnce
+import XMonad.Util.EZConfig
 import XMonad.Wallpaper
 
 main = do
@@ -22,11 +23,15 @@ main = do
       , terminal   = myTerminal
       , modMask    = myModMask 
       , workspaces = myWorkspaces
-      }
+      } `additionalKeysP` myKeys
 
-myBar = "xmobar -d"
+--Bind Mod to the Windows Key
+myModMask = mod4Mask
 
+myWorkspaces = [ "1", "2", "3", "4", "5", "6", "7", "8", "9" ]
 myBorderWidth = 1
+myTerminal = "alacritty"
+myBar = "xmobar -d"
 
 myLayoutHook =  spacingRaw True (Border 0 5 0 5) True (Border 5 0 5 0) True $
                 tallLayout ||| fullLayout ||| bottomLayout
@@ -49,10 +54,5 @@ floatingRule = composeAll [
 
 myHandleEventHook = fullscreenEventHook
 
-myTerminal = "alacritty"
-
---Bind Mod to the Windows Key
-myModMask = mod4Mask
-
-myWorkspaces = [ "1", "2", "3", "4", "5", "6", "7", "8", "9" ]
-
+myKeys = [("M-<Backspace>", spawn "feh --bg-scale $(find ~/Wallpapers | shuf -n 1)")
+         ]
