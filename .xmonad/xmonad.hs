@@ -10,6 +10,7 @@ import XMonad.Util.Run(spawnPipe, hPutStrLn)
 import XMonad.Util.SpawnOnce
 import XMonad.Util.EZConfig
 import XMonad.Wallpaper
+import XMonad.Util.NamedScratchpad
 
 main = do
    xmproc <- spawnPipe myBar
@@ -40,19 +41,26 @@ myLayoutHook =  spacingRaw True (Border 0 5 0 5) True (Border 5 0 5 0) True $
                   bottomLayout = smartBorders . avoidStruts $ Mirror( Tall 1 (3/100) (1/2))
                   fullLayout = noBorders Full
 
+scratchpads = [
+    NS "guake" "guake" (className =? "guake") defaultFloating
+ ]
+
 myManageHook = composeAll [
     manageDocks,
     isFullscreen --> doFullFloat,
-    floatingRule,
+    floatingWindowsHook,
+    namedScratchpadManageHook scratchpads,
     manageHook defaultConfig
  ] 
 
-floatingRule = composeAll [
+floatingWindowsHook = composeAll [
     className =? "mpv" --> doFloat,
     className =? "Guake" --> doFloat
  ]
 
 myHandleEventHook = fullscreenEventHook
 
-myKeys = [("M-<Backspace>", spawn "feh --bg-scale $(find ~/Wallpapers | shuf -n 1)")
-         ]
+myKeys = [
+  ("M-<Backspace>", spawn "feh --bg-scale $(find ~/Wallpapers | shuf -n 1)"),
+  ("M-g", namedScratchpadAction scratchpads "guake")
+ ]
