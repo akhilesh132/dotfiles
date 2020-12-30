@@ -1,6 +1,3 @@
-# Trayer as Standalone tray
-trayer --edge top --align right --iconspacing 10 --height 20 --width 20 --margin 0 --transparent true --alpha 65 --SetDockType true  --SetPartialStrut false  --tint 0x151515 &
-
 # Pulse audio tray
 pasystray &
 
@@ -12,3 +9,7 @@ nm-applet &
 
 # drop down terminal
 guake &
+
+# Trayer as Standalone tray
+trayer --edge top --align right --iconspacing 10 --height 20 --width 20 --margin 0 --transparent true --alpha 15 --SetDockType true  --SetPartialStrut true  --tint 0x303030 &
+

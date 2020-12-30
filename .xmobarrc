@@ -1,7 +1,7 @@
 Config {
    position = Static { xpos = 0 , ypos = 0, width = 1550, height = 20 }
-,  alpha = 190
-,  bgColor  =      "#151515"
+,  alpha = 245
+,  bgColor  =      "#303030"
 ,  font =         "xft:Bitstream Vera Sans Mono:Bold:size=10:antialias=true"
 ,  iconRoot =     "/home/akhilesh/.xmobar-icons/icons"
 ,  sepChar =  "%"       -- delineator between plugin names and straight text
