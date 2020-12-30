@@ -11,6 +11,9 @@ import XMonad.Util.SpawnOnce
 import XMonad.Util.EZConfig
 import XMonad.Wallpaper
 import XMonad.Util.NamedScratchpad
+import qualified  XMonad.StackSet as W
+
+import Data.Monoid
 
 main = do
    xmproc <- spawnPipe myBar
@@ -32,7 +35,7 @@ myModMask = mod4Mask
 myWorkspaces = [ "1", "2", "3", "4", "5", "6", "7", "8", "9" ]
 myBorderWidth = 1
 myTerminal = "alacritty"
-myBar = "xmobar -d"
+myBar = "xmobar"
 
 myLayoutHook =  spacingRaw True (Border 0 5 0 5) True (Border 5 0 5 0) True $
                 tallLayout ||| fullLayout ||| bottomLayout
@@ -42,7 +45,7 @@ myLayoutHook =  spacingRaw True (Border 0 5 0 5) True (Border 5 0 5 0) True $
                   fullLayout = noBorders Full
 
 scratchpads = [
-    NS "guake" "guake" (className =? "guake") defaultFloating
+    NS "guake" "guake" (className =? "guake") defaultFloating 
  ]
 
 myManageHook = composeAll [
@@ -54,13 +57,13 @@ myManageHook = composeAll [
  ] 
 
 floatingWindowsHook = composeAll [
-    className =? "mpv" --> doFloat,
-    className =? "Guake" --> doFloat
+    className =? "guake" --> doFloat,
+    className =? "mpv" --> (doRectFloat $ W.RationalRect 0.80 0.80 0.20 0.20)
  ]
 
 myHandleEventHook = fullscreenEventHook
 
 myKeys = [
-  ("M-<Backspace>", spawn "feh --bg-scale $(find ~/Wallpapers | shuf -n 1)"),
+  ("M-<Backspace>", spawn "feh --bg-fill $(find ~/Wallpapers | shuf -n 1)"),
   ("M-g", namedScratchpadAction scratchpads "guake")
  ]
