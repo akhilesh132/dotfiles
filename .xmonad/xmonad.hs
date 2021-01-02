@@ -53,8 +53,17 @@ myLogHook h = dynamicLogWithPP  xmobarPP {
   }
 
 scratchpads = [
-    NS "dropDownTerminal" "guake" (className =? ".guake-wrapped") (customFloating $ W.RationalRect 0 0 1.00 0.40)
+    NS "dropDownTerminal" spawnDropDownTerm findDropDownTerm manageDropDownTerm 
  ]
+   where
+     spawnDropDownTerm = "guake" 
+     findDropDownTerm =   className =? ".guake-wrapped"
+     manageDropDownTerm = customFloating $ W.RationalRect x y w h
+                      where
+                        x = 0.00
+                        y = 0.00
+                        w = 1.00
+                        h = 0.40
 
 myManageHook = composeAll [
     manageDocks,
