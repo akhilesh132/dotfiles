@@ -19,17 +19,14 @@ main = do
    xmproc <- spawnPipe myBar
    setRandomWallpaper [ "$HOME/Wallpapers" ]
    xmonad $docks desktopConfig
-      { borderWidth = myBorderWidth
-      , layoutHook = myLayoutHook
-      , manageHook = myManageHook
+      { borderWidth =     myBorderWidth
+      , layoutHook =      myLayoutHook
+      , manageHook =      myManageHook
       , handleEventHook = myHandleEventHook 
-      , logHook = dynamicLogWithPP  xmobarPP {
-                      ppOutput = hPutStrLn xmproc ,
-                      ppTitle = xmobarColor "green" "" . shorten 50
-                   }
-      , terminal   = myTerminal
-      , modMask    = myModMask 
-      , workspaces = myWorkspaces
+      , logHook =         myLogHook xmproc 
+      , terminal   =      myTerminal
+      , modMask    =      myModMask 
+      , workspaces =      myWorkspaces
       } `additionalKeysP` myKeys
 
 --Bind Mod to the Windows Key
@@ -46,6 +43,13 @@ myLayoutHook =  spacingRaw True (Border 0 5 0 5) True (Border 5 0 5 0) True $
                   tallLayout = smartBorders . avoidStruts $ Tall 1 (3/100) (1/2)
                   bottomLayout = smartBorders . avoidStruts $ Mirror( Tall 1 (3/100) (1/2))
                   fullLayout = noBorders Full
+
+myLogHook h = dynamicLogWithPP  xmobarPP {
+    ppOutput  =        hPutStrLn h ,
+    ppTitle   =        xmobarColor "lightgreen" "" . shorten 50,
+    ppCurrent =        xmobarColor "yellow"     "" . shorten 10,
+    ppHidden  =        xmobarColor "grey"       "" . shorten 10
+  }
 
 scratchpads = [
     NS "dropDownTerminal" "guake" (className =? ".guake-wrapped") (customFloating $ W.RationalRect 0 0 1.00 0.40)
