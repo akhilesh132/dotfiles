@@ -48,7 +48,8 @@ myLogHook h = dynamicLogWithPP  xmobarPP {
     ppOutput  =        hPutStrLn h ,
     ppTitle   =        xmobarColor "lightgreen" "" . shorten 50,
     ppCurrent =        xmobarColor "yellow"     "" . shorten 10,
-    ppHidden  =        xmobarColor "grey"       "" . shorten 10
+    ppHidden  =        xmobarColor "grey"       "" . shorten 10,
+    ppUrgent  =        xmobarColor "red"        "" . shorten 10
   }
 
 scratchpads = [
