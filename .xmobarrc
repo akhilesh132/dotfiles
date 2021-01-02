@@ -1,12 +1,12 @@
 Config {
-   position = Static { xpos = 0 , ypos = 0, width = 1550, height = 20 }
+   position = Static { xpos = 0 , ypos = 0, width = 1700, height = 20 }
 ,  alpha = 245
 ,  bgColor  =      "#303030"
 ,  font =         "xft:Bitstream Vera Sans Mono:Bold:size=10:antialias=true"
 ,  iconRoot =     "/home/akhilesh/.xmobar-icons/icons"
 ,  sepChar =  "%"       -- delineator between plugin names and straight text
 ,  alignSep = "}{"      -- separator between left-right alignment
-,  template = "<icon=extra/nixos_16.xpm/> %uname% %date%   %disku%  %memory%  %multicpu%  %dynnetwork% }{  "
+,  template = " %StdinReader% } <icon=extra/nixos_16.xpm/> %uname% %date% { %disku% %memory% %multicpu% %dynnetwork% "
 ,  commands = 
         [
         -- Disk usage 
@@ -39,6 +39,7 @@ Config {
         , Run Date           "<icon=extra/calendar-clock-icon_16.xpm/> <fc=#ABABAB>%e %b %Y (%a) %r</fc>" "date" 10
 
          , Run Com "uname" ["-s","-r"] "" 0
+         , Run StdinReader
 
         ]
 }

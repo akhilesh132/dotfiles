@@ -11,5 +11,5 @@ nm-applet &
 guake &
 
 # Trayer as Standalone tray
-trayer --edge top --align right --iconspacing 10 --height 20 --width 20 --margin 0 --transparent true --alpha 15 --SetDockType true  --SetPartialStrut true  --tint 0x303030 &
+trayer --edge top --align right --iconspacing 10 --height 20 --widthtype pixel --width 220 --margin 0 --transparent true --alpha 15 --SetDockType true  --SetPartialStrut true  --tint 0x303030 &
 

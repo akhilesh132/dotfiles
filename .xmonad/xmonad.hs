@@ -23,7 +23,10 @@ main = do
       , layoutHook = myLayoutHook
       , manageHook = myManageHook
       , handleEventHook = myHandleEventHook 
-      , logHook = dynamicLogWithPP $ xmobarPP { ppOutput = hPutStrLn xmproc }
+      , logHook = dynamicLogWithPP  xmobarPP {
+                      ppOutput = hPutStrLn xmproc ,
+                      ppTitle = xmobarColor "green" "" . shorten 50
+                   }
       , terminal   = myTerminal
       , modMask    = myModMask 
       , workspaces = myWorkspaces
@@ -45,7 +48,7 @@ myLayoutHook =  spacingRaw True (Border 0 5 0 5) True (Border 5 0 5 0) True $
                   fullLayout = noBorders Full
 
 scratchpads = [
-    NS "dropDownTerminal" "guake" (className =? ".guake-wrapped") (customFloating $ W.RationalRect 0 0 0.99 0.40)
+    NS "dropDownTerminal" "guake" (className =? ".guake-wrapped") (customFloating $ W.RationalRect 0 0 1.00 0.40)
  ]
 
 myManageHook = composeAll [
@@ -58,7 +61,7 @@ myManageHook = composeAll [
 
 floatingWindowsHook = composeAll [
     className =? "Gimp" --> doFloat,
-    className =? ".guake-wrapped" --> (doRectFloat $ W.RationalRect 0.00 0.00 0.98 0.40 ),
+    className =? ".guake-wrapped" --> (doRectFloat $ W.RationalRect 0.00 0.00 1.00 0.40 ),
     className =? "TeamViewer"     --> (doRectFloat $ W.RationalRect 0.60 0.05 0.39 0.35),
     className =? "mpv"            --> (doRectFloat $ W.RationalRect 0.80 0.80 0.20 0.20)
  ]
