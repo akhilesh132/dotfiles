@@ -6,11 +6,11 @@ Config {
 ,  iconRoot =     "/home/akhilesh/.xmobar-icons/icons"
 ,  sepChar =  "%"       -- delineator between plugin names and straight text
 ,  alignSep = "}{"      -- separator between left-right alignment
-,  template = " %StdinReader% } <icon=extra/nixos_16.xpm/> %uname% %date% { %disku% %memory% %multicpu% %dynnetwork% "
+,  template = " %StdinReader% } <icon=extra/nixos_16.xpm/> %uname% %date% { %disku% %memory% %multicpu% %wlp6s0% "
 ,  commands = 
         [
         -- Disk usage 
-         Run DiskU          [("/","<icon=extra/harddisk-icon_16.xpm/> /: <usedp>%")] 
+         Run DiskU          [("/","<icon=extra/ssd_24_18.xpm/> /: <usedp>%")] 
                              [ "-L","50", "-l", "grey"]
                              300
 
@@ -28,10 +28,9 @@ Config {
 
         -- network activity monitor (dynamic interface resolution)
         -- threshold units: B/s
-        , Run DynNetwork     [ "-t" , "<icon=extra/wifi-icon_16.xpm/><up> <dev>: <icon=extra/down_arrow_1_14.xpm/><tx> kB/s <icon=extra/up_arrow_1_14.xpm/><rx> kB/s"
+        , Run Network "wlp6s0"  [ "-t" , "<icon=extra/wifi-icon_16.xpm/><up> <dev>: <icon=extra/down_arrow_1_14.xpm/> <rx> kB/s <icon=extra/up_arrow_1_14.xpm/> <tx> kB/s"
                              , "-L", "1000", "-H", "5000"
                              , "-w", "3"
-                             , "--", "--devices", "wlp6s0,enp7s0"
                              ] 10
 
         -- time and date indicator 
