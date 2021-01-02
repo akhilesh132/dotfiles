@@ -11,6 +11,7 @@ import XMonad.Util.SpawnOnce
 import XMonad.Util.EZConfig
 import XMonad.Wallpaper
 import XMonad.Util.NamedScratchpad
+import XMonad.Actions.CopyWindow
 import qualified  XMonad.StackSet as W
 
 import Data.Monoid
@@ -84,5 +85,10 @@ myHandleEventHook = fullscreenEventHook
 
 myKeys = [
   ("M-<Backspace>", spawn "feh --bg-fill $(find ~/Wallpapers | shuf -n 1)"),
-  ("M-g", namedScratchpadAction scratchpads "dropDownTerminal")
+  ("M-g", namedScratchpadAction scratchpads "dropDownTerminal"),
+
+  -- window bindings
+  ("M-a", windows copyToAll ),
+  ("M-C-a" , killAllOtherCopies),
+  ("M-S-a" , kill1)
  ]
