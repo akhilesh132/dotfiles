@@ -6,6 +6,8 @@ import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageHelpers
 import XMonad.Layout.NoBorders (noBorders, smartBorders)
 import XMonad.Layout.Spacing
+import XMonad.Layout.Tabbed
+import XMonad.Layout.ResizableTile
 import XMonad.Util.Run(spawnPipe, hPutStrLn)
 import XMonad.Util.SpawnOnce
 import XMonad.Util.EZConfig
@@ -39,11 +41,12 @@ myTerminal = "alacritty"
 myBar = "xmobar"
 
 myLayoutHook =  spacingRaw True (Border 0 5 0 5) True (Border 5 0 5 0) True $
-                tallLayout ||| fullLayout ||| bottomLayout
+                resizableTallLayout ||| fullLayout ||| bottomLayout ||| myTabbedLayout
                 where
-                  tallLayout = smartBorders . avoidStruts $ Tall 1 (3/100) (1/2)
+                  resizableTallLayout = smartBorders . avoidStruts $ ResizableTall 1 (3/100) (1/2) []
                   bottomLayout = smartBorders . avoidStruts $ Mirror( Tall 1 (3/100) (1/2))
                   fullLayout = noBorders Full
+                  myTabbedLayout = smartBorders simpleTabbed
 
 myLogHook h = dynamicLogWithPP  xmobarPP {
     ppOutput  =        hPutStrLn h ,
@@ -85,9 +88,15 @@ myHandleEventHook = fullscreenEventHook
 
 myKeys = [
   ("M-<Backspace>", spawn "feh --bg-fill $(find ~/Wallpapers | shuf -n 1)"),
+
+   -- Named Scratchpad bindings
   ("M-g", namedScratchpadAction scratchpads "dropDownTerminal"),
 
-  -- window bindings
+  -- Layout modifier bindings
+  ("M-S-s", sendMessage MirrorShrink ),
+  ("M-S-x", sendMessage MirrorExpand ),
+
+  -- Window bindings
   ("M-a", windows copyToAll ),
   ("M-C-a" , killAllOtherCopies),
   ("M-S-a" , kill1)
