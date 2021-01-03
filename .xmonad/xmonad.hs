@@ -44,7 +44,7 @@ myLayoutHook =  spacingRaw True (Border 0 5 0 5) True (Border 5 0 5 0) True $
                 resizableTallLayout ||| fullLayout ||| bottomLayout ||| myTabbedLayout
                 where
                   resizableTallLayout = smartBorders . avoidStruts $ ResizableTall 1 (3/100) (1/2) []
-                  bottomLayout = smartBorders . avoidStruts $ Mirror( Tall 1 (3/100) (1/2))
+                  bottomLayout = smartBorders . avoidStruts $ Mirror( ResizableTall 1 (3/100) (1/2) [] )
                   fullLayout = noBorders Full
                   myTabbedLayout = smartBorders simpleTabbed
 
