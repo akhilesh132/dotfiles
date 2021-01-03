@@ -14,6 +14,7 @@ import XMonad.Util.EZConfig
 import XMonad.Wallpaper
 import XMonad.Util.NamedScratchpad
 import XMonad.Actions.CopyWindow
+import XMonad.Actions.WithAll
 import qualified  XMonad.StackSet as W
 
 import Data.Monoid
@@ -95,6 +96,9 @@ myKeys = [
   -- Layout modifier bindings
   ("M-S-s", sendMessage MirrorShrink ),
   ("M-S-x", sendMessage MirrorExpand ),
+
+  -- Actions bindings
+  ("M-S-t", sinkAll ),
 
   -- Window bindings
   ("M-a", windows copyToAll ),
