@@ -1,4 +1,5 @@
 import XMonad
+import System.Exit
 import XMonad.Config.Desktop
 import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
@@ -8,6 +9,7 @@ import XMonad.Layout.NoBorders (noBorders, smartBorders)
 import XMonad.Layout.Spacing
 import XMonad.Layout.Tabbed
 import XMonad.Layout.ResizableTile
+import XMonad.Layout.Renamed
 import XMonad.Util.Run(spawnPipe, hPutStrLn)
 import XMonad.Util.SpawnOnce
 import XMonad.Util.EZConfig
@@ -15,6 +17,9 @@ import XMonad.Wallpaper
 import XMonad.Util.NamedScratchpad
 import XMonad.Actions.CopyWindow
 import XMonad.Actions.WithAll
+import XMonad.Prompt
+import XMonad.Prompt.ConfirmPrompt
+import XMonad.Prompt.Shell
 import qualified  XMonad.StackSet as W
 
 import Data.Monoid
@@ -41,15 +46,27 @@ myBorderWidth = 1
 myTerminal = "alacritty"
 myBar = "xmobar"
 
-myLayoutHook =  spacingRaw True (Border 0 5 0 5) True (Border 5 0 5 0) True $
-                resizableTallLayout ||| fullLayout ||| bottomLayout ||| myTabbedLayout
-                where
-                  resizableTallLayout = smartBorders . avoidStruts $ myResizableTall 
-                  bottomLayout = smartBorders . avoidStruts $ Mirror( myResizableTall )
-                  fullLayout = noBorders Full
-                  myTabbedLayout = smartBorders simpleTabbed
-                  myResizableTall = ResizableTall 1 (3/100) (1/2) []
-
+myLayoutHook =  spacingRaw True (Border 0 5 0 5) True (Border 5 0 5 0) True 
+                $   rightTileLayout
+                ||| fullLayout
+                ||| bottomLayout
+                ||| tabbedLayout
+                
+rightTileLayout = renamed [Replace "Tall"]
+       $ smartBorders
+       $ avoidStruts
+       $ ResizableTall 1 (3/100) (1/2) []
+fullLayout = renamed [ Replace "Maximized"]
+	   $ noBorders
+	   $ Full
+bottomLayout = renamed [Replace "Bottom"]
+	   $ smartBorders
+       $ avoidStruts 
+       $ Mirror(ResizableTall 1 (3/100) (1/2) [])
+tabbedLayout = renamed [Replace "Tabbed"]
+	   $ smartBorders 
+	   $ simpleTabbed
+       
 myLogHook h = dynamicLogWithPP  xmobarPP {
     ppOutput  =        hPutStrLn h ,
     ppTitle   =        xmobarColor "lightgreen" "" . shorten 50,
@@ -71,7 +88,13 @@ scratchpads = [
                         w = 1.00
                         h = 0.40
 
-myManageHook = composeAll [
+myManageHook = composeOne
+  -- Handle floating windows
+  [
+    transience      --move transient windows to their parent
+  , isDialog        -?> doCenterFloat
+  ] <+> composeAll
+  [
     manageDocks,
     isFullscreen --> doFullFloat,
     floatingWindowsHook,
@@ -87,6 +110,18 @@ floatingWindowsHook = composeAll [
  ]
 
 myHandleEventHook = fullscreenEventHook
+
+--------------------------------------------------------------------------------
+-- | Customize the way 'XMonad.Prompt' looks and behaves.  It's a
+-- great replacement for dzen.
+myXPConfig = def
+  { position          = Top
+  , alwaysHighlight   = True
+  , promptBorderWidth = 0
+  , font              = "xft:monospace:size=9"
+  }
+
+--------------------------------------------------------------------------------
 
 myKeys = [
   ("M-<Backspace>", spawn "feh --bg-fill $(find ~/Wallpapers | shuf -n 1)"),
@@ -104,5 +139,11 @@ myKeys = [
   -- Window bindings
   ("M-a", windows copyToAll ),
   ("M-C-a" , killAllOtherCopies),
-  ("M-S-a" , kill1)
+  ("M-S-a" , kill1),
+
+  -- Xmonad actions
+  ("M-S-q", confirmPrompt myXPConfig "exit" (io exitSuccess)),
+ 
+  -- Prompts keybindings
+  ("M-S-p", shellPrompt myXPConfig)
  ]
