@@ -17,6 +17,7 @@ import XMonad.Wallpaper
 import XMonad.Util.NamedScratchpad
 import XMonad.Actions.CopyWindow
 import XMonad.Actions.WithAll
+import XMonad.Actions.Search
 import XMonad.Prompt
 import XMonad.Prompt.ConfirmPrompt
 import XMonad.Prompt.Shell
@@ -89,23 +90,23 @@ scratchpads = [
                         h = 0.40
 
 myManageHook = composeOne
-  -- Handle floating windows
   [
     transience      --move transient windows to their parent
   , isDialog        -?> doCenterFloat
+  , isFullscreen    -?> doFullFloat
   ] <+> composeAll
   [
     manageDocks,
-    isFullscreen --> doFullFloat,
     floatingWindowsHook,
     namedScratchpadManageHook scratchpads,
     manageHook defaultConfig
  ] 
 
 floatingWindowsHook = composeAll [
-    className =? "Gimp" --> doFloat,
+    className =? "Gimp"           --> doFloat,
+    className =? "zoom"           --> doFloat,
+    className =? "TeamViewer"     --> doFloat,
     className =? ".guake-wrapped" --> (doRectFloat $ W.RationalRect 0.00 0.00 1.00 0.40 ),
-    className =? "TeamViewer"     --> (doRectFloat $ W.RationalRect 0.60 0.05 0.39 0.35),
     className =? "mpv"            --> (doRectFloat $ W.RationalRect 0.80 0.80 0.20 0.20)
  ]
 
@@ -119,6 +120,7 @@ myXPConfig = def
   , alwaysHighlight   = True
   , promptBorderWidth = 0
   , font              = "xft:monospace:size=9"
+  , fgColor           = "yellow"
   }
 
 --------------------------------------------------------------------------------
@@ -145,5 +147,13 @@ myKeys = [
   ("M-S-q", confirmPrompt myXPConfig "exit" (io exitSuccess)),
  
   -- Prompts keybindings
-  ("M-S-p", shellPrompt myXPConfig)
+  ("M-S-p", shellPrompt myXPConfig),
+  --Search engines
+  ("M-x a", promptSearch myXPConfig amazon),
+  ("M-x d", promptSearch myXPConfig duckduckgo),
+  ("M-x g", promptSearch myXPConfig google),
+  ("M-x i", promptSearch myXPConfig images),
+  ("M-x m", promptSearch myXPConfig maps),
+  ("M-x w", promptSearch myXPConfig wikipedia),
+  ("M-x y", promptSearch myXPConfig youtube)
  ]
