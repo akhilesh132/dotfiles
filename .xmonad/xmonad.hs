@@ -10,6 +10,7 @@ import XMonad.Layout.Spacing
 import XMonad.Layout.Tabbed
 import XMonad.Layout.ResizableTile
 import XMonad.Layout.Renamed
+import XMonad.Layout.SimpleFloat
 import XMonad.Util.Run(spawnPipe, hPutStrLn)
 import XMonad.Util.SpawnOnce
 import XMonad.Util.EZConfig
@@ -52,6 +53,7 @@ myLayoutHook =  spacingRaw True (Border 0 5 0 5) True (Border 5 0 5 0) True
                 ||| fullLayout
                 ||| bottomLayout
                 ||| tabbedLayout
+                ||| floatingLayout
                 
 rightTileLayout = renamed [Replace "Tall"]
        $ smartBorders
@@ -67,7 +69,8 @@ bottomLayout = renamed [Replace "Bottom"]
 tabbedLayout = renamed [Replace "Tabbed"]
 	   $ smartBorders 
 	   $ simpleTabbed
-       
+floatingLayout = simpleFloat       
+
 myLogHook h = dynamicLogWithPP  xmobarPP {
     ppOutput  =        hPutStrLn h ,
     ppTitle   =        xmobarColor "lightgreen" "" . shorten 50,
