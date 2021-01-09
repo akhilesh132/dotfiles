@@ -48,12 +48,12 @@ myTerminal = "alacritty"
 myBar = "xmobar"
 
 myLayoutHook =  spacingRaw True (Border 0 5 0 5) True (Border 5 0 5 0) True 
-                $   rightTileLayout
+                $   tallLayout
                 ||| fullLayout
                 ||| bottomLayout
                 ||| floatingLayout
                 
-rightTileLayout = renamed [Replace "Tall"]
+tallLayout = renamed [Replace "Tall"]
        $ smartBorders
        $ avoidStruts
        $ ResizableTall 1 (3/100) (1/2) []
@@ -137,7 +137,7 @@ myKeys = [
   ("M-S-t", sinkAll ),
 
   -- Window bindings
-  ("M-a", windows copyToAll ),
+  ("M-a"   , windows copyToAll ),
   ("M-C-a" , killAllOtherCopies),
   ("M-S-a" , kill1),
 
