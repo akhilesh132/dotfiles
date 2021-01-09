@@ -42,7 +42,7 @@ main = do
 --Bind Mod to the Windows Key
 myModMask = mod4Mask
 
-myWorkspaces = [ "1", "2", "3", "4", "5", "6", "7", "8", "9" ]
+myWorkspaces = [ "1:Main", "2:Web", "3:Files", "4:Dev", "5:Collab", "6", "7", "8", "9" ]
 myBorderWidth = 1
 myTerminal = "alacritty"
 myBar = "xmobar"
@@ -68,7 +68,7 @@ floatingLayout = simpleFloat
 
 myLogHook h = dynamicLogWithPP  xmobarPP {
     ppOutput  =        hPutStrLn h ,
-    ppTitle   =        xmobarColor "lightgreen" "" . shorten 50,
+    ppTitle   =        xmobarColor "lightgreen" "" . shorten 30,
     ppCurrent =        xmobarColor "yellow"     "" . shorten 10,
     ppHidden  =        xmobarColor "grey"       "" . shorten 10,
     ppUrgent  =        xmobarColor "red"        "" . shorten 10
