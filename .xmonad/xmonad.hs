@@ -7,7 +7,6 @@ import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageHelpers
 import XMonad.Layout.NoBorders (noBorders, smartBorders)
 import XMonad.Layout.Spacing
-import XMonad.Layout.Tabbed
 import XMonad.Layout.ResizableTile
 import XMonad.Layout.Renamed
 import XMonad.Layout.SimpleFloat
@@ -52,7 +51,6 @@ myLayoutHook =  spacingRaw True (Border 0 5 0 5) True (Border 5 0 5 0) True
                 $   rightTileLayout
                 ||| fullLayout
                 ||| bottomLayout
-                ||| tabbedLayout
                 ||| floatingLayout
                 
 rightTileLayout = renamed [Replace "Tall"]
@@ -60,15 +58,12 @@ rightTileLayout = renamed [Replace "Tall"]
        $ avoidStruts
        $ ResizableTall 1 (3/100) (1/2) []
 fullLayout = renamed [ Replace "Maximized"]
-	   $ noBorders
-	   $ Full
+       $ noBorders
+       $ Full
 bottomLayout = renamed [Replace "Bottom"]
-	   $ smartBorders
+       $ smartBorders
        $ avoidStruts 
        $ Mirror(ResizableTall 1 (3/100) (1/2) [])
-tabbedLayout = renamed [Replace "Tabbed"]
-	   $ smartBorders 
-	   $ simpleTabbed
 floatingLayout = simpleFloat       
 
 myLogHook h = dynamicLogWithPP  xmobarPP {
