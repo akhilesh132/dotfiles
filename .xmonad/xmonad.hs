@@ -10,6 +10,7 @@ import XMonad.Layout.Spacing
 import XMonad.Layout.ResizableTile
 import XMonad.Layout.Renamed
 import XMonad.Layout.SimpleFloat
+import XMonad.Layout.PerWorkspace
 import XMonad.Util.Run(spawnPipe, hPutStrLn)
 import XMonad.Util.SpawnOnce
 import XMonad.Util.EZConfig
@@ -42,25 +43,26 @@ main = do
 --Bind Mod to the Windows Key
 myModMask = mod4Mask
 
-myWorkspaces = [ "1:Main", "2:Web", "3:Files", "4:Dev", "5:Collab", "6", "7", "8", "9" ]
+myWorkspaces = [ "main", "web", "files", "dev", "collab", "6", "7", "8", "9" ]
 myBorderWidth = 1
 myTerminal = "alacritty"
 myBar = "xmobar"
 
-myLayoutHook =  spacingRaw True (Border 0 5 0 5) True (Border 5 0 5 0) True 
-                $   tallLayout
-                ||| fullLayout
-                ||| bottomLayout
-                ||| floatingLayout
-                
+myLayoutHook = onWorkspace "collab" floatingLayout 
+             $ onWorkspace "web" (fullLayout ||| tallLayout)
+             $ tallLayout ||| fullLayout
+ 
 tallLayout = renamed [Replace "Tall"]
+       $ spacingRaw True (Border 0 5 0 5) True (Border 5 0 5 0) True 
        $ smartBorders
        $ avoidStruts
        $ ResizableTall 1 (3/100) (1/2) []
 fullLayout = renamed [ Replace "Maximized"]
+       $ spacingRaw True (Border 0 5 0 5) True (Border 5 0 5 0) True 
        $ noBorders
        $ Full
 bottomLayout = renamed [Replace "Bottom"]
+       $ spacingRaw True (Border 0 5 0 5) True (Border 5 0 5 0) True 
        $ smartBorders
        $ avoidStruts 
        $ Mirror(ResizableTall 1 (3/100) (1/2) [])
