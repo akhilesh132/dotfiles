@@ -9,7 +9,7 @@ import XMonad.Layout.NoBorders (noBorders, smartBorders)
 import XMonad.Layout.Spacing
 import XMonad.Layout.ResizableTile
 import XMonad.Layout.Renamed
-import XMonad.Layout.SimpleFloat
+import XMonad.Layout.SimplestFloat
 import XMonad.Layout.PerWorkspace
 import XMonad.Util.Run(spawnPipe, hPutStrLn)
 import XMonad.Util.SpawnOnce
@@ -66,7 +66,7 @@ bottomLayout = renamed [Replace "Bottom"]
        $ smartBorders
        $ avoidStruts 
        $ Mirror(ResizableTall 1 (3/100) (1/2) [])
-floatingLayout = simpleFloat       
+floatingLayout = simplestFloat       
 
 myLogHook h = dynamicLogWithPP  xmobarPP {
     ppOutput  =        hPutStrLn h ,
