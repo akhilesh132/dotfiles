@@ -50,7 +50,7 @@ myBar = "xmobar"
 
 myLayoutHook = onWorkspace "collab" floatingLayout 
              $ onWorkspace "web" (fullLayout ||| tallLayout)
-             $ tallLayout ||| fullLayout
+             $ tallLayout ||| fullLayout ||| mirrorTallLayout
  
 tallLayout = renamed [Replace "Tall"]
        $ spacingRaw True (Border 0 5 0 5) True (Border 5 0 5 0) True 
@@ -61,7 +61,7 @@ fullLayout = renamed [ Replace "Maximized"]
        $ spacingRaw True (Border 0 5 0 5) True (Border 5 0 5 0) True 
        $ noBorders
        $ Full
-bottomLayout = renamed [Replace "Bottom"]
+mirrorTallLayout = renamed [Replace "Bottom"]
        $ spacingRaw True (Border 0 5 0 5) True (Border 5 0 5 0) True 
        $ smartBorders
        $ avoidStruts 
