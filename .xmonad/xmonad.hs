@@ -48,9 +48,10 @@ myBorderWidth = 1
 myTerminal = "alacritty"
 myBar = "xmobar"
 
-myLayoutHook = onWorkspace "collab" floatingLayout 
-             $ onWorkspace "web" (fullLayout ||| tallLayout)
-             $ tallLayout ||| fullLayout ||| mirrorTallLayout
+myLayoutHook =  onWorkspace "main" ( tallLayout ||| fullLayout ||| mirrorTallLayout )
+              $ onWorkspace "web" ( fullLayout ||| tallLayout )
+              $ onWorkspace "collab" floatingLayout
+              $ tallLayout ||| fullLayout
  
 tallLayout = renamed [Replace "Tall"]
        $ spacingRaw True (Border 0 5 0 5) True (Border 5 0 5 0) True 
