@@ -11,7 +11,7 @@ nm-applet &
 guake &
 
 # redshift
-redshift-gtk -l 24:84 -b 0.75:0.60 &
+redshift-gtk -l 24:84 -b 0.75:0.60 -o &
 
 # Trayer as Standalone tray
 trayer --edge top --align right --iconspacing 10 --height 20 --widthtype pixel --width 220 --margin 0 --transparent true --alpha 15 --SetDockType true  --SetPartialStrut true  --tint 0x303030 &
