@@ -1,3 +1,6 @@
+# X11 compositor
+picom -b &
+
 # Pulse audio tray
 pasystray &
 
