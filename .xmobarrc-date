@@ -1,0 +1,20 @@
+Config {
+   position = Static { xpos = 805 , ypos = 0, width = 310, height = 20 }
+,  alpha = 255
+,  bgColor  =      "#333333"
+,  font =         "xft:Bitstream Vera Sans Mono:Bold:size=10:antialias=true"
+,  iconRoot =     "/home/akhilesh/.xmobar-icons/icons"
+,  sepChar =  "%"       -- delineator between plugin names and straight text
+,  alignSep = "}{"      -- separator between left-right alignment
+,  template = "   %date%   "
+,  commands = 
+        [
+
+        -- time and date indicator 
+        --   (%e = day of month, %b month name %a = day of week, %r = 12 hour format)
+           Run Date           "<icon=extra/calendar-clock-icon_16.xpm/> <fc=#ABABAB>%e %b %Y (%a) %r</fc>" "date" 10
+
+         , Run Com "uname" ["-s","-r"] "" 0
+
+        ]
+}

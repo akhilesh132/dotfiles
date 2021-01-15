@@ -27,7 +27,9 @@ import qualified  XMonad.StackSet as W
 import Data.Monoid
 
 main = do
-   xmproc <- spawnPipe myBar
+   xmproc <- spawnPipe "xmobar ~/.xmobarrc-stdin"
+   spawn "xmobar ~/.xmobarrc-date"
+   spawn "xmobar ~/.xmobarrc-sysmon"
    setRandomWallpaper [ "$HOME/Wallpapers" ]
    xmonad $docks desktopConfig
       { borderWidth =     myBorderWidth
@@ -71,7 +73,7 @@ floatingLayout = simplestFloat
 
 myLogHook h = dynamicLogWithPP  xmobarPP {
     ppOutput  =        hPutStrLn h ,
-    ppTitle   =        xmobarColor "lightgreen" "" . shorten 30,
+    ppTitle   =        xmobarColor "lightgreen" "" . shorten 40,
     ppCurrent =        xmobarColor "yellow"     "" . shorten 10,
     ppHidden  =        xmobarColor "grey"       "" . shorten 10,
     ppUrgent  =        xmobarColor "red"        "" . shorten 10
@@ -128,6 +130,9 @@ myXPConfig = def
 
 myKeys = [
   ("M-<Backspace>", spawn "feh --bg-fill $(find ~/Wallpapers | shuf -n 1)"),
+
+  -- overriding default keybindings
+  ("M-p", spawn "rofi -width 30 -show drun -theme ~/.local/share/rofi/themes/nord/nord.rasi"),
 
    -- Named Scratchpad bindings
   ("M-g", namedScratchpadAction scratchpads "dropDownTerminal"),
