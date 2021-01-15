@@ -132,7 +132,7 @@ myKeys = [
   ("M-<Backspace>", spawn "feh --bg-fill $(find ~/Wallpapers | shuf -n 1)"),
 
   -- overriding default keybindings
-  ("M-p", spawn "rofi -width 30 -show drun -theme ~/.local/share/rofi/themes/nord/nord.rasi"),
+  ("M-p", spawn "rofi -width 30 -show drun -theme ~/.config/rofi/themes/nord/nord.rasi"),
 
    -- Named Scratchpad bindings
   ("M-g", namedScratchpadAction scratchpads "dropDownTerminal"),
