@@ -13,7 +13,7 @@ Config {
 
         -- time and date indicator 
         --   (%e = day of month, %b month name %a = day of week, %r = 12 hour format)
-           Run Date           "<icon=extra/calendar-clock-icon_16.xpm/> <fc=#FDB777>%e</fc> <fc=#FDA766>%b</fc> <fc=#FD9346>%Y</fc> <fc=#FD7F2C>(%a)</fc> <fc=#FF6200><icon=extra/clock-icon_14.xpm/> %r </fc>" "date" 10
+           Run Date           "<icon=extra/calendar-clock-icon_16.xpm/> <fc=#FDB777>%e</fc> <fc=#FDA766>%b</fc> <fc=#FD9346>%Y</fc> <fc=#FD7F2C>(%a)</fc> <fc=#FD6255><icon=extra/clock-icon_14.xpm/> %r </fc>" "date" 10
 
          , Run Com "uname" ["-s","-r"] "" 0
 

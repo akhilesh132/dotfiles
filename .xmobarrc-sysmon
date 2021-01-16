@@ -6,7 +6,7 @@ Config {
      , "xft:FontAwesome:pixelsize=13"
          ]
 
-,  position = Static { xpos = 1135 , ypos = 0, width = 540, height = 20 }
+,  position = Static { xpos = 1180 , ypos = 0, width = 450, height = 20 }
 ,  alpha = 245
 ,  bgColor  =      "#303030"
 ,  fgColor =       "#c1c1c1"
