@@ -1,5 +1,5 @@
 Config {
-   position = Static { xpos = 0 , ypos = 0, width = 600, height = 20 }
+   position = Static { xpos = 0 , ypos = 0, width = 740, height = 20 }
 ,  alpha = 245
 ,  bgColor  =      "#303030"
 ,  font =         "xft:Bitstream Vera Sans Mono:Bold:size=10:antialias=true"
