@@ -1,8 +1,15 @@
 Config {
-   position = Static { xpos = 1135 , ypos = 0, width = 540, height = 20 }
+   font    = "xft:Ubuntu:weight=bold:pixelsize=12:antialias=true:hinting=true"
+,  additionalFonts = [
+       "xft:Mononoki Nerd Font:pixelsize=11:antialias=true:hinting=true"
+     , "xft:Mononoki Nerd Font:pixelsize=16:antialias=true:hinting=true"
+     , "xft:FontAwesome:pixelsize=13"
+         ]
+
+,  position = Static { xpos = 1135 , ypos = 0, width = 540, height = 20 }
 ,  alpha = 245
 ,  bgColor  =      "#303030"
-,  font =         "xft:Bitstream Vera Sans Mono:Bold:size=10:antialias=true"
+,  fgColor =       "#c1c1c1"
 ,  iconRoot =     "/home/akhilesh/.xmobar-icons/icons"
 ,  sepChar =  "%"       -- delineator between plugin names and straight text
 ,  alignSep = "}{"      -- separator between left-right alignment
