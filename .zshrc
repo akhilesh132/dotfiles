@@ -4,6 +4,13 @@ pfetch | lolcat
 # startship prompt
 eval "$(starship init zsh)"
 
+# https://github.com/sharkdp/vivid/tree/master/themes
+# Vivid LS_COLORS generator
+export LS_COLORS="$(vivid generate molokai)"
+
+# Restore colorscheme
+wal -Rq
+
 # Zplug - next gen zsh plugin manager
 source ~/.zplug/init.zsh
 
