@@ -19,12 +19,16 @@ import XMonad.Util.NamedScratchpad
 import XMonad.Actions.CopyWindow
 import XMonad.Actions.WithAll
 import XMonad.Actions.Search
+import qualified XMonad.Actions.TreeSelect as TS
 import XMonad.Prompt
 import XMonad.Prompt.ConfirmPrompt
 import XMonad.Prompt.Shell
 import qualified  XMonad.StackSet as W
 
 import Data.Monoid
+import Data.Tree
+import qualified Data.Map as M
+
 
 main = do
    xmproc <- spawnPipe "xmobar ~/.xmobarrc-stdin"
@@ -64,7 +68,7 @@ fullLayout = renamed [ Replace "Maximized"]
        $ spacingRaw True (Border 0 5 0 5) True (Border 5 0 5 0) True 
        $ noBorders
        $ Full
-mirrorTallLayout = renamed [Replace "Bottom"]
+mirrorTallLayout = renamed [Replace "Mirror Tall"]
        $ spacingRaw True (Border 0 5 0 5) True (Border 5 0 5 0) True 
        $ smartBorders
        $ avoidStruts 
@@ -115,9 +119,8 @@ floatingWindowsHook = composeAll [
 
 myHandleEventHook = fullscreenEventHook
 
---------------------------------------------------------------------------------
--- | Customize the way 'XMonad.Prompt' looks and behaves.  It's a
--- great replacement for dzen.
+--  Customize the way 'XMonad.Prompt' looks and behaves.
+--  It's a great replacement for dzen.
 myXPConfig = def
   { position          = Top
   , alwaysHighlight   = True
@@ -126,12 +129,54 @@ myXPConfig = def
   , fgColor           = "yellow"
   }
 
---------------------------------------------------------------------------------
+treeselectAction a = TS.treeselectAction a
+   [ Node (TS.TSNode "Shutdown" "Poweroff the system" (spawn "shutdown")) []
+   , Node (TS.TSNode "Brightness" "Adjust system brightness" (return ())) 
+      [ Node (TS.TSNode "Full" "Full Brightness" (spawn "xbrightness 65535")) []
+      , Node (TS.TSNode "Mid"  "Mid Brightness"  (spawn "xbrightness 45000")) []
+      , Node (TS.TSNode "Low"  "Low Brightness"  (spawn "xbrightness 30000")) []
+      , Node (TS.TSNode "Night"  "Night brightness" (spawn "xbrightness 30000; redshift -l 24:84 -b 1:1 -o")) []
+        
+      ]
+   
+   ]
+
+tsDefaultConfig = TS.TSConfig { TS.ts_hidechildren = True
+                              , TS.ts_background   = 0xdd282c34
+                              , TS.ts_font         = "xft:Sans-10"
+                              , TS.ts_node         = (0xffd0d0d0, 0xff1c1f24)
+                              , TS.ts_nodealt      = (0xffd0d0d0, 0xff282c34)
+                              , TS.ts_highlight    = (0xffffffff, 0xff755999)
+                              , TS.ts_extra        = 0xffd0d0d0
+                              , TS.ts_node_width   = 200
+                              , TS.ts_node_height  = 20
+                              , TS.ts_originX      = 100
+                              , TS.ts_originY      = 100
+                              , TS.ts_indent       = 80
+                              , TS.ts_navigate     = myTreeNavigation
+                              }
+
+
+myTreeNavigation = M.fromList
+    [ ((0, xK_Escape), TS.cancel)
+    , ((0, xK_Return), TS.select)
+    , ((0, xK_space),  TS.select)
+    , ((0, xK_Up),     TS.movePrev)
+    , ((0, xK_Down),   TS.moveNext)
+    , ((0, xK_Left),   TS.moveParent)
+    , ((0, xK_Right),  TS.moveChild)
+    , ((0, xK_k),      TS.movePrev)
+    , ((0, xK_j),      TS.moveNext)
+    , ((0, xK_h),      TS.moveParent)
+    , ((0, xK_l),      TS.moveChild)
+    , ((0, xK_o),      TS.moveHistBack)
+    , ((0, xK_i),      TS.moveHistForward)
+    ]
 
 myKeys = [
   ("M-<Backspace>", spawn "feh --bg-fill $(find ~/Wallpapers | shuf -n 1)"),
 
-  -- overriding default keybindings
+  -- Replace dmenu with rofi
   ("M-p", spawn "rofi -width 30 -show drun -theme ~/.config/rofi/themes/nord/nord.rasi"),
 
    -- Named Scratchpad bindings
@@ -155,11 +200,13 @@ myKeys = [
   -- Prompts keybindings
   ("M-S-p", shellPrompt myXPConfig),
   --Search engines
-  ("M-x a", promptSearch myXPConfig amazon),
-  ("M-x d", promptSearch myXPConfig duckduckgo),
-  ("M-x g", promptSearch myXPConfig google),
-  ("M-x i", promptSearch myXPConfig images),
-  ("M-x m", promptSearch myXPConfig maps),
-  ("M-x w", promptSearch myXPConfig wikipedia),
-  ("M-x y", promptSearch myXPConfig youtube)
+  ("M-s a", promptSearch myXPConfig amazon),
+  ("M-s d", promptSearch myXPConfig duckduckgo),
+  ("M-s g", promptSearch myXPConfig google),
+  ("M-s i", promptSearch myXPConfig images),
+  ("M-s m", promptSearch myXPConfig maps),
+  ("M-s w", promptSearch myXPConfig wikipedia),
+  ("M-s y", promptSearch myXPConfig youtube),
+  -- utilities and extensions
+  ("M-x t", treeselectAction tsDefaultConfig)
  ]
