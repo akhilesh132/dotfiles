@@ -1,5 +1,13 @@
 pfetch | lolcat
 
+# Zplug - next gen zsh plugin manager
+source ~/.zplug/init.zsh
+
+zplug "plugins/fasd", from:oh-my-zsh
+zplug "plugins/zsh-interactive-cd", from:oh-my-zsh
+zplug "plugins/emoji", from:oh-my-zsh
+zplug load
+
 # https://github.com/starship/starship
 # startship prompt
 eval "$(starship init zsh)"
@@ -11,18 +19,11 @@ export LS_COLORS="$(vivid generate molokai)"
 # Restore colorscheme
 wal -Rq
 
-# Zplug - next gen zsh plugin manager
-source ~/.zplug/init.zsh
-
-zplug "plugins/fasd", from:oh-my-zsh
-zplug "plugins/zsh-interactive-cd", from:oh-my-zsh
-zplug "plugins/emoji", from:oh-my-zsh
-zplug load
-
 # manage dotfiles/config files with git
 alias dotfiles='git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
 alias mynixos='git --git-dir=$HOME/.myNixOs --work-tree=/'
 
+alias bluelightfilter='redshift -l 24:84 -b 1:1 -o'
 # fzf integration
 # https://github.com/junegunn/fzf
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh

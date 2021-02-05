@@ -1,12 +1,16 @@
 Config {
-   position = Static { xpos = 0 , ypos = 0, width = 1700, height = 20 }
-,  alpha = 245
-,  bgColor  =      "#303030"
-,  font =         "xft:Bitstream Vera Sans Mono:Bold:size=10:antialias=true"
+ position = Static { xpos = 0 , ypos = 0, width = 1700, height = 20 }
+,alpha = 200
+,bgColor  =      "#303030"
+,font    = "xft:Ubuntu:weight=bold:pixelsize=12:antialias=true:hinting=true"
+,additionalFonts = [ "xft:Mononoki Nerd Font:pixelsize=11:antialias=true:hinting=true"
+                    ,"xft:FontAwesome:pixelsize=13"
+                    ]
+
 ,  iconRoot =     "/home/akhilesh/.xmobar-icons/icons"
 ,  sepChar =  "%"       -- delineator between plugin names and straight text
 ,  alignSep = "}{"      -- separator between left-right alignment
-,  template = " %StdinReader% } <icon=extra/nixos_16.xpm/> %uname% %date% { %disku% %memory% %multicpu% %wlp6s0% "
+,  template = "<icon=extra/nixos_16.xpm/>  %StdinReader% }  %date% { %disku% %memory% %multicpu% %wlp6s0%   "
 ,  commands = 
         [
         -- Disk usage 
@@ -35,7 +39,7 @@ Config {
 
         -- time and date indicator 
         --   (%e = day of month, %b month name %a = day of week, %r = 12 hour format)
-        , Run Date           "<icon=extra/calendar-clock-icon_16.xpm/> <fc=#ABABAB>%e %b %Y (%a) %r</fc>" "date" 10
+        , Run Date           "<icon=extra/calendar-clock-icon_16.xpm/> <fc=#CBCBCB>%e %b %Y</fc> <fc=lightgreen>(%a)</fc> <fc=orange>%r</fc>" "date" 10
 
          , Run Com "uname" ["-s","-r"] "" 0
          , Run StdinReader

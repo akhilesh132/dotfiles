@@ -1,5 +1,6 @@
 # X11 compositor
-picom -b &
+#picom --experimental-backends -b &
+~/.repo/picom/build/src/picom --experimental-backends -b &
 
 # Pulse audio tray
 pasystray &
@@ -17,5 +18,5 @@ guake &
 redshift-gtk -l 24:84 -b 0.75:0.60 -o &
 
 # Trayer as Standalone tray
-trayer --edge top --align right --iconspacing 10 --height 20 --widthtype pixel --width 220 --margin 0 --transparent true --alpha 15 --SetDockType true  --SetPartialStrut true  --tint 0x303030 &
+trayer --edge top --align right --iconspacing 10 --height 20 --widthtype pixel --width 220 --margin 0 --transparent true --alpha 205 --SetDockType true  --SetPartialStrut true --tint 0x111111 &
 

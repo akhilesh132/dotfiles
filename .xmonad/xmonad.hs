@@ -31,9 +31,7 @@ import qualified Data.Map as M
 
 
 main = do
-   xmproc <- spawnPipe "xmobar ~/.xmobarrc-stdin"
-   spawn "xmobar ~/.xmobarrc-date"
-   spawn "xmobar ~/.xmobarrc-sysmon"
+   xmproc <- spawnPipe "xmobar ~/.xmobarrc"
    setRandomWallpaper [ "$HOME/Wallpapers" ]
    xmonad $docks desktopConfig
       { borderWidth =     myBorderWidth
@@ -130,16 +128,27 @@ myXPConfig = def
   }
 
 treeselectAction a = TS.treeselectAction a
-   [ Node (TS.TSNode "Shutdown" "Poweroff the system" (spawn "shutdown")) []
+   [ Node (TS.TSNode "Shutdown" "Poweroff the system" (spawn "poweroff")) []
    , Node (TS.TSNode "Brightness" "Adjust system brightness" (return ())) 
-      [ Node (TS.TSNode "Full" "Full Brightness" (spawn "xbrightness 65535")) []
-      , Node (TS.TSNode "Mid"  "Mid Brightness"  (spawn "xbrightness 45000")) []
-      , Node (TS.TSNode "Low"  "Low Brightness"  (spawn "xbrightness 30000")) []
-      , Node (TS.TSNode "Night"  "Night brightness" (spawn "xbrightness 30000; redshift -l 24:84 -b 1:1 -o")) []
+      [ Node (TS.TSNode "Full"    "Full Brightness" (spawn (brightness "full")))    []
+      , Node (TS.TSNode "Mid"     "Mid Brightness"  (spawn (brightness "mid")))     []
+      , Node (TS.TSNode "Low"     "Low Brightness"  (spawn (brightness "low")))     []
+      , Node (TS.TSNode "Reading" "Reading mode"    (spawn (brightness "reading"))) []
+      , Node (TS.TSNode "Dark"    "Dark room"       (spawn (brightness "dark")))    []
         
       ]
    
    ]
+
+blueLightFilter :: [Char]
+blueLightFilter = "redshift -l 24:84 -b 1:1 -o"
+
+brightness:: String -> String
+brightness "full" = "xbrightness 65535"
+brightness "mid" = "xbrightness 45000"
+brightness "low" = "xbrightness 30000"
+brightness "reading" = "xbrightness 32000; " ++ blueLightFilter
+brightness "dark" = "xbrightness 30000; " ++ blueLightFilter
 
 tsDefaultConfig = TS.TSConfig { TS.ts_hidechildren = True
                               , TS.ts_background   = 0xdd282c34
