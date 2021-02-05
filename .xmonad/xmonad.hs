@@ -130,25 +130,31 @@ myXPConfig = def
 treeselectAction a = TS.treeselectAction a
    [ Node (TS.TSNode "Shutdown" "Poweroff the system" (spawn "poweroff")) []
    , Node (TS.TSNode "Brightness" "Adjust system brightness" (return ())) 
-      [ Node (TS.TSNode "Full"    "Full Brightness" (spawn (brightness "full")))    []
-      , Node (TS.TSNode "Mid"     "Mid Brightness"  (spawn (brightness "mid")))     []
-      , Node (TS.TSNode "Low"     "Low Brightness"  (spawn (brightness "low")))     []
-      , Node (TS.TSNode "Reading" "Reading mode"    (spawn (brightness "reading"))) []
-      , Node (TS.TSNode "Dark"    "Dark room"       (spawn (brightness "dark")))    []
-        
+      [ Node (TS.TSNode "99%" "99% Brightness" (brightness 0.99)) []
+      , Node (TS.TSNode "90%" "90% Brightness" (brightness 0.90)) []
+      , Node (TS.TSNode "80%" "80% Brightness" (brightness 0.80)) []
+      , Node (TS.TSNode "70%" "70% Brightness" (brightness 0.70)) []
+      , Node (TS.TSNode "65%" "65% Brightness" (brightness 0.65)) []
+      , Node (TS.TSNode "60%" "60% Brightness" (brightness 0.60)) []
+      , Node (TS.TSNode "55%" "55% Brightness" (brightness 0.55)) []
+      , Node (TS.TSNode "50%" "50% Brightness" (brightness 0.50)) []
+      , Node (TS.TSNode "45%" "45% Brightness" (brightness 0.45)) []
+      , Node (TS.TSNode "40%" "60% Brightness" (brightness 0.40)) []   
       ]
-   
+   , Node (TS.TSNode "Color Temperature" "Adjust color temperature" (return ())) 
+      [ Node (TS.TSNode "30 K" "30k temperature" (colorTemperature 30000)) []
+      , Node (TS.TSNode "35 K" "35k temperature" (colorTemperature 35000)) []
+      , Node (TS.TSNode "40 K" "40k temperature" (colorTemperature 40000)) []
+      , Node (TS.TSNode "45 K" "45k temperature" (colorTemperature 45000)) [] 
+      , Node (TS.TSNode "45 K" "45k temperature" (colorTemperature 50000)) []
+      , Node (TS.TSNode "45 K" "45k temperature" (colorTemperature 55000)) []
+      , Node (TS.TSNode "45 K" "45k temperature" (colorTemperature 60000)) []
+      , Node (TS.TSNode "45 K" "45k temperature" (colorTemperature 65000)) []
+      ]
    ]
 
-blueLightFilter :: [Char]
-blueLightFilter = "redshift -l 24:84 -b 1:1 -o"
-
-brightness:: String -> String
-brightness "full" = "xbrightness 65535"
-brightness "mid" = "xbrightness 45000"
-brightness "low" = "xbrightness 30000"
-brightness "reading" = "xbrightness 32000; " ++ blueLightFilter
-brightness "dark" = "xbrightness 30000; " ++ blueLightFilter
+brightness percentage = spawn ("redshift -P -o -l 24:84 -b " ++ show percentage)
+colorTemperature temperature =   spawn ("redshift -P -l 24:84 -O "++ show temperature) 
 
 tsDefaultConfig = TS.TSConfig { TS.ts_hidechildren = True
                               , TS.ts_background   = 0xdd282c34
