@@ -1,7 +1,6 @@
 Config {
- position = Static { xpos = 0 , ypos = 0, width = 1700, height = 20 }
-,alpha = 200
-,bgColor  =      "#303030"
+ position = Static { xpos = 5 , ypos = 0, width = 1905, height = 20 }
+,alpha = 150
 ,font    = "xft:Ubuntu:weight=bold:pixelsize=12:antialias=true:hinting=true"
 ,additionalFonts = [ "xft:Mononoki Nerd Font:pixelsize=11:antialias=true:hinting=true"
                     ,"xft:FontAwesome:pixelsize=13"
@@ -10,11 +9,15 @@ Config {
 ,  iconRoot =     "/home/akhilesh/.xmobar-icons/icons"
 ,  sepChar =  "%"       -- delineator between plugin names and straight text
 ,  alignSep = "}{"      -- separator between left-right alignment
-,  template = "<icon=extra/nixos_16.xpm/>  %StdinReader% }  %date% { %disku% %memory% %multicpu% %wlp6s0%   "
+,  template = "   <icon=extra/nixos_16.xpm/>  %StdinReader% }  %date% { %alsa:default:Master% %disku% %memory% %multicpu% %wlp6s0%  "
 ,  commands = 
         [
+         Run Alsa "default" "Master" ["-t", " vol <volume>% <status>" 
+                                      , "-H", "80", "-c", "red"
+                                       
+                                     ] 
         -- Disk usage 
-         Run DiskU          [("/","<icon=extra/ssd_24_18.xpm/> /: <usedp>%")] 
+         , Run DiskU          [("/","<icon=extra/ssd_24_18.xpm/> /: <usedp>%")] 
                              [ "-L","50", "-l", "grey"]
                              300
 

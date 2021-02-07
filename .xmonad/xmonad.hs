@@ -5,6 +5,7 @@ import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageHelpers
+import XMonad.Layout.Fullscreen ( fullscreenManageHook, fullscreenSupport )
 import XMonad.Layout.NoBorders (noBorders, smartBorders)
 import XMonad.Layout.Spacing
 import XMonad.Layout.ResizableTile
@@ -31,26 +32,29 @@ import qualified Data.Map as M
 
 
 main = do
-   xmproc <- spawnPipe "xmobar ~/.xmobarrc"
-   setRandomWallpaper [ "$HOME/Wallpapers" ]
-   xmonad $docks desktopConfig
-      { borderWidth =     myBorderWidth
-      , layoutHook =      myLayoutHook
-      , manageHook =      myManageHook
-      , handleEventHook = myHandleEventHook 
-      , logHook =         myLogHook xmproc 
-      , terminal   =      myTerminal
-      , modMask    =      myModMask 
-      , workspaces =      myWorkspaces
+    spawn "${HOME}/.bin/picom --experimental-backends -b &"
+    xmproc <- spawnPipe "xmobar ~/.xmobarrc"
+    setRandomWallpaper [ "$HOME/Wallpapers" ]
+    xmonad $fullscreenSupport $docks $ewmh desktopConfig
+      { terminal   =      myTerminal,
+        borderWidth =     myBorderWidth,
+        focusFollowsMouse = myFocusFollowsMouse,
+        clickJustFocuses = myClickJustFocuses,
+        layoutHook =      myLayoutHook,
+        manageHook =      myManageHook,
+        handleEventHook = myHandleEventHook,
+        logHook =         myLogHook xmproc,
+        modMask    =      myModMask,
+        workspaces =      myWorkspaces
       } `additionalKeysP` myKeys
 
 --Bind Mod to the Windows Key
 myModMask = mod4Mask
-
-myWorkspaces = [ "main", "web", "files", "dev", "collab", "6", "7", "8", "9" ]
+myWorkspaces = [ "main", "web", "files", "dev", "col", "6", "7", "8", "9" ]
 myBorderWidth = 1
 myTerminal = "alacritty"
-myBar = "xmobar"
+myFocusFollowsMouse = True
+myClickJustFocuses = False
 
 myLayoutHook =  onWorkspace "main" ( tallLayout ||| fullLayout ||| mirrorTallLayout )
               $ onWorkspace "web" ( fullLayout ||| tallLayout )
@@ -103,6 +107,7 @@ myManageHook = composeOne
   [
     manageDocks,
     floatingWindowsHook,
+    fullscreenManageHook,
     namedScratchpadManageHook scratchpads,
     manageHook defaultConfig
  ] 
@@ -128,31 +133,42 @@ myXPConfig = def
   }
 
 treeselectAction a = TS.treeselectAction a
-   [ Node (TS.TSNode "Shutdown" "Poweroff the system" (spawn "poweroff")) []
+   [ Node (TS.TSNode "Audio" "Adjust system audio" (return ())) 
+      [ Node (TS.TSNode "Toggle Mute" "Toogle Mute" (spawn toggleMuteCmd)) []
+      , Node (TS.TSNode "90%" "90% Volume" (volume 90)) []
+      , Node (TS.TSNode "80%" "80% Volume" (volume 80)) []
+      , Node (TS.TSNode "70%" "70% Volume" (volume 70)) []
+      , Node (TS.TSNode "60%" "60% Volume" (volume 60)) []
+      , Node (TS.TSNode "50%" "50% Volume" (volume 50)) []
+      , Node (TS.TSNode "40%" "40% Volume" (volume 40)) []
+      , Node (TS.TSNode "30%" "30% Volume" (volume 30)) []
+      , Node (TS.TSNode "20%" "20% Volume" (volume 20)) []
+      ]
    , Node (TS.TSNode "Brightness" "Adjust system brightness" (return ())) 
-      [ Node (TS.TSNode "99%" "99% Brightness" (brightness 0.99)) []
-      , Node (TS.TSNode "90%" "90% Brightness" (brightness 0.90)) []
-      , Node (TS.TSNode "80%" "80% Brightness" (brightness 0.80)) []
-      , Node (TS.TSNode "70%" "70% Brightness" (brightness 0.70)) []
-      , Node (TS.TSNode "65%" "65% Brightness" (brightness 0.65)) []
-      , Node (TS.TSNode "60%" "60% Brightness" (brightness 0.60)) []
-      , Node (TS.TSNode "55%" "55% Brightness" (brightness 0.55)) []
-      , Node (TS.TSNode "50%" "50% Brightness" (brightness 0.50)) []
+      [ Node (TS.TSNode "Full" "Full Brightness" (brightness 0.99)) []
       , Node (TS.TSNode "45%" "45% Brightness" (brightness 0.45)) []
-      , Node (TS.TSNode "40%" "60% Brightness" (brightness 0.40)) []   
+      , Node (TS.TSNode "50%" "50% Brightness" (brightness 0.50)) []
+      , Node (TS.TSNode "55%" "55% Brightness" (brightness 0.55)) []
+      , Node (TS.TSNode "60%" "60% Brightness" (brightness 0.60)) []
+      , Node (TS.TSNode "65%" "65% Brightness" (brightness 0.65)) []
+      , Node (TS.TSNode "70%" "70% Brightness" (brightness 0.70)) []
+      , Node (TS.TSNode "80%" "80% Brightness" (brightness 0.80)) []
+      , Node (TS.TSNode "90%" "90% Brightness" (brightness 0.90)) []
       ]
    , Node (TS.TSNode "Color Temperature" "Adjust color temperature" (return ())) 
       [ Node (TS.TSNode "30 K" "30k temperature" (colorTemperature 30000)) []
       , Node (TS.TSNode "35 K" "35k temperature" (colorTemperature 35000)) []
       , Node (TS.TSNode "40 K" "40k temperature" (colorTemperature 40000)) []
       , Node (TS.TSNode "45 K" "45k temperature" (colorTemperature 45000)) [] 
-      , Node (TS.TSNode "45 K" "45k temperature" (colorTemperature 50000)) []
-      , Node (TS.TSNode "45 K" "45k temperature" (colorTemperature 55000)) []
-      , Node (TS.TSNode "45 K" "45k temperature" (colorTemperature 60000)) []
-      , Node (TS.TSNode "45 K" "45k temperature" (colorTemperature 65000)) []
+      , Node (TS.TSNode "50 K" "50k temperature" (colorTemperature 50000)) []
+      , Node (TS.TSNode "55 K" "55k temperature" (colorTemperature 55000)) []
+      , Node (TS.TSNode "60 K" "60k temperature" (colorTemperature 60000)) []
+      , Node (TS.TSNode "65 K" "65k temperature" (colorTemperature 65000)) []
       ]
+   , Node (TS.TSNode "Shutdown" "Poweroff" (spawn "poweroff")) []
    ]
-
+toggleMuteCmd = "amixer -q sset Master toggle"
+volume percentage = spawn ("amixer -M set Master " ++ show percentage ++ "%")
 brightness percentage = spawn ("redshift -P -o -l 24:84 -b " ++ show percentage)
 colorTemperature temperature =   spawn ("redshift -P -l 24:84 -O "++ show temperature) 
 
