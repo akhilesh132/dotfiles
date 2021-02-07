@@ -12,7 +12,7 @@ Config {
 ,  template = "   <icon=extra/nixos_16.xpm/>  %StdinReader% }  %date% { %alsa:default:Master% %disku% %memory% %multicpu% %wlp6s0%  "
 ,  commands = 
         [
-         Run Alsa "default" "Master" ["-t", " vol <volume>% <status>" 
+         Run Alsa "default" "Master" ["-t", " <icon=extra/vol.xpm/>  <volume>% <status>" 
                                       , "-H", "80", "-c", "red"
                                        
                                      ] 

@@ -45,7 +45,8 @@ main = do
         handleEventHook = myHandleEventHook,
         logHook =         myLogHook xmproc,
         modMask    =      myModMask,
-        workspaces =      myWorkspaces
+        workspaces =      myWorkspaces,
+        startupHook        = myStartupHook
       } `additionalKeysP` myKeys
 
 --Bind Mod to the Windows Key
@@ -121,6 +122,8 @@ floatingWindowsHook = composeAll [
  ]
 
 myHandleEventHook = fullscreenEventHook
+
+myStartupHook = return()
 
 --  Customize the way 'XMonad.Prompt' looks and behaves.
 --  It's a great replacement for dzen.
