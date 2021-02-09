@@ -6,6 +6,7 @@ import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageHelpers
 import XMonad.Layout.Fullscreen ( fullscreenManageHook, fullscreenSupport )
+import XMonad.Layout.LimitWindows
 import XMonad.Layout.NoBorders (noBorders, smartBorders)
 import XMonad.Layout.Spacing
 import XMonad.Layout.ResizableTile
@@ -20,6 +21,8 @@ import XMonad.Util.NamedScratchpad
 import XMonad.Actions.CopyWindow
 import XMonad.Actions.WithAll
 import XMonad.Actions.Search
+import XMonad.Actions.Promote
+import XMonad.Actions.CycleWS
 import qualified XMonad.Actions.TreeSelect as TS
 import XMonad.Prompt
 import XMonad.Prompt.ConfirmPrompt
@@ -57,9 +60,16 @@ myTerminal = "alacritty"
 myFocusFollowsMouse = True
 myClickJustFocuses = False
 
-myLayoutHook =  onWorkspace "main" ( tallLayout ||| fullLayout ||| mirrorTallLayout )
-              $ onWorkspace "web" ( fullLayout ||| tallLayout )
-              $ onWorkspace "collab" floatingLayout
+myLayoutHook =  onWorkspace "main"
+                ( limitWindows 3 $ tallLayout 
+                  ||| fullLayout 
+                  ||| mirrorTallLayout 
+                )
+              $ onWorkspace "web" 
+                ( fullLayout
+                  ||| tallLayout 
+                )
+              $ onWorkspace "col" floatingLayout
               $ tallLayout ||| fullLayout
  
 tallLayout = renamed [Replace "Tall"]
@@ -208,32 +218,28 @@ myTreeNavigation = M.fromList
     ]
 
 myKeys = [
-  ("M-<Backspace>", spawn "feh --bg-fill $(find ~/Wallpapers | shuf -n 1)"),
-
+  ("M-<Return>", promote),
   -- Replace dmenu with rofi
   ("M-p", spawn "rofi -width 30 -show drun -theme ~/.config/rofi/themes/nord/nord.rasi"),
-
    -- Named Scratchpad bindings
   ("M-g", namedScratchpadAction scratchpads "dropDownTerminal"),
-
   -- Layout modifier bindings
   ("M-S-s", sendMessage MirrorShrink ),
   ("M-S-x", sendMessage MirrorExpand ),
-
   -- Actions bindings
   ("M-S-t", sinkAll ),
-
+  -- Xmonad actions
+  ("M-S-q", confirmPrompt myXPConfig "exit" (io exitSuccess)),
+  ("M-q",   spawn "xmonad --recompile; xmonad --restart"),
   -- Window bindings
   ("M-a"   , windows copyToAll ),
   ("M-C-a" , killAllOtherCopies),
   ("M-S-a" , kill1),
-
-  -- Xmonad actions
-  ("M-S-q", confirmPrompt myXPConfig "exit" (io exitSuccess)),
- 
+  -- Workspace bindings
+  ("M-<Left>", moveTo Prev NonEmptyWS),
+  ("M-<Right>", moveTo Next NonEmptyWS),
   -- Prompts keybindings
   ("M-S-p", shellPrompt myXPConfig),
-  --Search engines
   ("M-s a", promptSearch myXPConfig amazon),
   ("M-s d", promptSearch myXPConfig duckduckgo),
   ("M-s g", promptSearch myXPConfig google),
@@ -242,5 +248,6 @@ myKeys = [
   ("M-s w", promptSearch myXPConfig wikipedia),
   ("M-s y", promptSearch myXPConfig youtube),
   -- utilities and extensions
-  ("M-x t", treeselectAction tsDefaultConfig)
+  ("M-x t", treeselectAction tsDefaultConfig),
+  ("M-<Backspace>", spawn "feh --bg-fill $(find ~/Wallpapers | shuf -n 1)")
  ]
