@@ -17,13 +17,12 @@ eval "$(starship init zsh)"
 export LS_COLORS="$(vivid generate molokai)"
 
 # Restore colorscheme
-wal -Rq
+wal -Rq  > /dev/null
+
+# fzf integration
+# https://github.com/junegunn/fzf
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 
 # manage dotfiles/config files with git
 alias dotfiles='git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
 alias mynixos='git --git-dir=$HOME/.myNixOs --work-tree=/'
-
-alias bluelightfilter='redshift -l 24:84 -b 1:1 -o'
-# fzf integration
-# https://github.com/junegunn/fzf
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
