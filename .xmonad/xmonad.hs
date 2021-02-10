@@ -10,6 +10,7 @@ import XMonad.Layout.LimitWindows
 import XMonad.Layout.NoBorders (noBorders, smartBorders)
 import XMonad.Layout.Spacing
 import XMonad.Layout.ResizableTile
+import XMonad.Layout.MouseResizableTile 
 import XMonad.Layout.Renamed
 import XMonad.Layout.SimplestFloat
 import XMonad.Layout.PerWorkspace
@@ -23,11 +24,15 @@ import XMonad.Actions.WithAll
 import XMonad.Actions.Search
 import XMonad.Actions.Promote
 import XMonad.Actions.CycleWS
+import XMonad.Actions.CycleRecentWS
+import XMonad.Actions.CycleWindows
+import qualified XMonad.Actions.FlexibleResize as Flex
 import qualified XMonad.Actions.TreeSelect as TS
 import XMonad.Prompt
 import XMonad.Prompt.ConfirmPrompt
 import XMonad.Prompt.Shell
 import qualified  XMonad.StackSet as W
+
 
 import Data.Monoid
 import Data.Tree
@@ -50,7 +55,8 @@ main = do
         modMask    =      myModMask,
         workspaces =      myWorkspaces,
         startupHook        = myStartupHook
-      } `additionalKeysP` myKeys
+      } `additionalKeysP` myAdditionalKeysP
+        `additionalMouseBindings` myAdditionalMouseBindings
 
 --Bind Mod to the Windows Key
 myModMask = mod4Mask
@@ -61,8 +67,8 @@ myFocusFollowsMouse = True
 myClickJustFocuses = False
 
 myLayoutHook =  onWorkspace "main"
-                ( limitWindows 3 $ tallLayout 
-                  ||| fullLayout 
+                ( mouseResizableTallLayout
+                  |||fullLayout 
                   ||| mirrorTallLayout 
                 )
               $ onWorkspace "web" 
@@ -72,7 +78,13 @@ myLayoutHook =  onWorkspace "main"
               $ onWorkspace "col" floatingLayout
               $ tallLayout ||| fullLayout
  
+mouseResizableTallLayout= renamed [Replace "Tile"]
+       $ limitWindows 3
+       $ smartBorders
+       $ avoidStruts
+       $ mouseResizableTile
 tallLayout = renamed [Replace "Tall"]
+       $ limitWindows 3
        $ spacingRaw True (Border 0 5 0 5) True (Border 5 0 5 0) True 
        $ smartBorders
        $ avoidStruts
@@ -217,7 +229,7 @@ myTreeNavigation = M.fromList
     , ((0, xK_i),      TS.moveHistForward)
     ]
 
-myKeys = [
+myAdditionalKeysP = [
   ("M-<Return>", promote),
   -- Replace dmenu with rofi
   ("M-p", spawn "rofi -width 30 -show drun -theme ~/.config/rofi/themes/nord/nord.rasi"),
@@ -230,14 +242,16 @@ myKeys = [
   ("M-S-t", sinkAll ),
   -- Xmonad actions
   ("M-S-q", confirmPrompt myXPConfig "exit" (io exitSuccess)),
-  ("M-q",   spawn "xmonad --recompile; xmonad --restart"),
+  ("M-q",   spawn "xmonad --recompile && xmonad --restart"),
   -- Window bindings
   ("M-a"   , windows copyToAll ),
   ("M-C-a" , killAllOtherCopies),
   ("M-S-a" , kill1),
+  ("M1-<Tab>"   , cycleRecentWindows [xK_Alt_L] xK_Tab xK_Tab ),
   -- Workspace bindings
   ("M-<Left>", moveTo Prev NonEmptyWS),
   ("M-<Right>", moveTo Next NonEmptyWS),
+  ("M-<Tab>"   , cycleRecentWS [xK_Super_L] xK_Tab xK_Tab ),
   -- Prompts keybindings
   ("M-S-p", shellPrompt myXPConfig),
   ("M-s a", promptSearch myXPConfig amazon),
@@ -251,3 +265,8 @@ myKeys = [
   ("M-x t", treeselectAction tsDefaultConfig),
   ("M-<Backspace>", spawn "feh --bg-fill $(find ~/Wallpapers | shuf -n 1)")
  ]
+
+myAdditionalMouseBindings = [
+  ((myModMask, button3), (\w -> focus w >> Flex.mouseResizeWindow w))
+ ]
+
