@@ -261,9 +261,12 @@ myAdditionalKeysP = [
   ("M-s m", promptSearch myXPConfig maps),
   ("M-s w", promptSearch myXPConfig wikipedia),
   ("M-s y", promptSearch myXPConfig youtube),
-  -- utilities and extensions
+  -- Utilities and extensions
   ("M-x t", treeselectAction tsDefaultConfig),
-  ("M-<Backspace>", spawn "feh --bg-fill $(find ~/Wallpapers | shuf -n 1)")
+  ("M-<Backspace>", spawn "feh --bg-fill $(find ~/Wallpapers | shuf -n 1)"),
+ -- Multimedia key bindings
+ ("M-<Down>", spawn ("pamixer --decrease 5")),
+ ("M-<Up>", spawn ("pamixer --increase 5"))
  ]
 
 myAdditionalMouseBindings = [
