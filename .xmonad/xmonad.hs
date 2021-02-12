@@ -5,6 +5,7 @@ import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageHelpers
+import XMonad.Hooks.Place
 import XMonad.Layout.Fullscreen ( fullscreenManageHook, fullscreenSupport )
 import XMonad.Layout.LimitWindows
 import XMonad.Layout.NoBorders (noBorders, smartBorders)
@@ -29,8 +30,10 @@ import XMonad.Actions.CycleWindows
 import qualified XMonad.Actions.FlexibleResize as Flex
 import qualified XMonad.Actions.TreeSelect as TS
 import XMonad.Prompt
+import XMonad.Prompt.FuzzyMatch
 import XMonad.Prompt.ConfirmPrompt
 import XMonad.Prompt.Shell
+import XMonad.Prompt.Window
 import qualified  XMonad.StackSet as W
 
 
@@ -60,22 +63,22 @@ main = do
 
 --Bind Mod to the Windows Key
 myModMask = mod4Mask
-myWorkspaces = [ "main", "web", "files", "dev", "col", "6", "7", "8", "9" ]
+myWorkspaces = [ "Main", "Web", "Files", "Dev", "Col", "Ent", "7", "8", "Back" ]
 myBorderWidth = 1
 myTerminal = "alacritty"
 myFocusFollowsMouse = True
 myClickJustFocuses = False
 
-myLayoutHook =  onWorkspace "main"
+myLayoutHook =  onWorkspace "Main"
                 ( mouseResizableTallLayout
                   |||fullLayout 
                   ||| mirrorTallLayout 
                 )
-              $ onWorkspace "web" 
+              $ onWorkspace "Web" 
                 ( fullLayout
                   ||| tallLayout 
                 )
-              $ onWorkspace "col" floatingLayout
+              $ onWorkspace "Col" floatingLayout
               $ tallLayout ||| fullLayout
  
 mouseResizableTallLayout= renamed [Replace "Tile"]
@@ -129,6 +132,7 @@ myManageHook = composeOne
   ] <+> composeAll
   [
     manageDocks,
+    placeHook simpleSmart,
     floatingWindowsHook,
     fullscreenManageHook,
     namedScratchpadManageHook scratchpads,
@@ -145,6 +149,9 @@ floatingWindowsHook = composeAll [
 
 myHandleEventHook = fullscreenEventHook
 
+-- State variable init
+brightnessVal = 0.6
+
 myStartupHook = return()
 
 --  Customize the way 'XMonad.Prompt' looks and behaves.
@@ -155,6 +162,8 @@ myXPConfig = def
   , promptBorderWidth = 0
   , font              = "xft:monospace:size=9"
   , fgColor           = "yellow"
+  , searchPredicate   = fuzzyMatch
+  , sorter            = fuzzySort
   }
 
 treeselectAction a = TS.treeselectAction a
@@ -228,6 +237,7 @@ myTreeNavigation = M.fromList
     , ((0, xK_o),      TS.moveHistBack)
     , ((0, xK_i),      TS.moveHistForward)
     ]
+
 
 myAdditionalKeysP = [
   ("M-<Return>", promote),
