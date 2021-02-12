@@ -9,7 +9,7 @@ Config {
 ,  iconRoot =     "/home/akhilesh/.xmobar-icons/icons"
 ,  sepChar =  "%"       -- delineator between plugin names and straight text
 ,  alignSep = "}{"      -- separator between left-right alignment
-,  template = "   <icon=extra/nixos_16.xpm/>  %StdinReader% }  %date% { %alsa:default:Master% %disku% %memory% %multicpu% %wlp6s0%  "
+,  template = "   <icon=extra/nixos_16.xpm/>  %StdinReader% }  %date% { %mpris2% %alsa:default:Master% %disku% %memory% %multicpu% %wlp6s0%  "
 ,  commands = 
         [
          Run Alsa "default" "Master" ["-t", " <icon=extra/vol.xpm/>  <volume>% <status>" 
@@ -45,6 +45,7 @@ Config {
         , Run Date           "<icon=extra/calendar-clock-icon_16.xpm/> <fc=#CBCBCB>%e %b %Y</fc> <fc=lightgreen>(%a)</fc> <fc=orange>%r</fc>" "date" 10
 
          , Run Com "uname" ["-s","-r"] "" 0
+         , Run Mpris2 "spotify" ["-t", "<icon=extra/music.xpm/><fc=#b19cd9><title></fc>" , "-M", "30"] 10
          , Run StdinReader
 
         ]
