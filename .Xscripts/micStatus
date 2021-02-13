@@ -1,0 +1,1 @@
+amixer get Capture | grep 'Front Left: Capture' | grep -o '\[.*$' | grep -oi '\[[a-z].*]$'
