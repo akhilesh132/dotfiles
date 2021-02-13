@@ -36,7 +36,6 @@ import XMonad.Prompt.Shell
 import XMonad.Prompt.Window
 import qualified  XMonad.StackSet as W
 
-
 import Data.Monoid
 import Data.Tree
 import qualified Data.Map as M
@@ -111,18 +110,18 @@ myLogHook h = dynamicLogWithPP  xmobarPP {
     ppUrgent  =        xmobarColor "red"        "" . shorten 10
   }
 
-scratchpads = [
-    NS "dropDownTerminal" spawnDropDownTerm findDropDownTerm manageDropDownTerm 
+myScratchPads = [
+    NS "dropdownTerminal" spawnTerm findTerm manageTerm 
  ]
    where
-     spawnDropDownTerm = "guake" 
-     findDropDownTerm =   className =? ".guake-wrapped"
-     manageDropDownTerm = customFloating $ W.RationalRect x y w h
+     spawnTerm = myTerminal ++ " --class dropdownTerminal" 
+     findTerm =   resource =? "dropdownTerminal"
+     manageTerm = customFloating $ W.RationalRect x y w h
                       where
-                        x = 0.00
-                        y = 0.00
-                        w = 1.00
-                        h = 0.40
+                        x = 0.25
+                        y = 0.25
+                        w = 0.50
+                        h = 0.50
 
 myManageHook = composeOne
   [
@@ -132,10 +131,10 @@ myManageHook = composeOne
   ] <+> composeAll
   [
     manageDocks,
-    placeHook simpleSmart,
     floatingWindowsHook,
     fullscreenManageHook,
-    namedScratchpadManageHook scratchpads,
+    namedScratchpadManageHook myScratchPads,
+    placeHook simpleSmart,
     manageHook defaultConfig
  ] 
 
@@ -143,8 +142,8 @@ floatingWindowsHook = composeAll [
     className =? "Gimp"           --> doFloat,
     className =? "zoom"           --> doFloat,
     className =? "TeamViewer"     --> doFloat,
-    className =? ".guake-wrapped" --> (doRectFloat $ W.RationalRect 0.00 0.00 1.00 0.40 ),
-    className =? "mpv"            --> (doRectFloat $ W.RationalRect 0.80 0.80 0.20 0.20)
+    className =? "mpv"            --> (doRectFloat $ W.RationalRect 0.80 0.80 0.20 0.20),
+    className =? "dropdownTerminal" --> (doRectFloat $ W.RationalRect 0.25 0.25 0.25 0.25)
  ]
 
 myHandleEventHook = fullscreenEventHook
@@ -167,7 +166,7 @@ myXPConfig = def
   }
 
 treeselectAction a = TS.treeselectAction a
-   [ Node (TS.TSNode "Audio" "Adjust system audio" (return ())) 
+   [ Node (TS.TSNode "+ Audio" "Adjust system audio" (return ())) 
       [ Node (TS.TSNode "Toggle Mute" "Toogle Mute" (spawn toggleMuteCmd)) []
       , Node (TS.TSNode "90%" "90% Volume" (volume 90)) []
       , Node (TS.TSNode "80%" "80% Volume" (volume 80)) []
@@ -178,7 +177,7 @@ treeselectAction a = TS.treeselectAction a
       , Node (TS.TSNode "30%" "30% Volume" (volume 30)) []
       , Node (TS.TSNode "20%" "20% Volume" (volume 20)) []
       ]
-   , Node (TS.TSNode "Brightness" "Adjust system brightness" (return ())) 
+   , Node (TS.TSNode "+ Brightness" "Adjust system brightness" (return ())) 
       [ Node (TS.TSNode "Full" "Full Brightness" (brightness 0.99)) []
       , Node (TS.TSNode "45%" "45% Brightness" (brightness 0.45)) []
       , Node (TS.TSNode "50%" "50% Brightness" (brightness 0.50)) []
@@ -189,7 +188,7 @@ treeselectAction a = TS.treeselectAction a
       , Node (TS.TSNode "80%" "80% Brightness" (brightness 0.80)) []
       , Node (TS.TSNode "90%" "90% Brightness" (brightness 0.90)) []
       ]
-   , Node (TS.TSNode "Color Temperature" "Adjust color temperature" (return ())) 
+   , Node (TS.TSNode "+ Color Temperature" "Adjust color temperature" (return ())) 
       [ Node (TS.TSNode "30 K" "30k temperature" (colorTemperature 30000)) []
       , Node (TS.TSNode "35 K" "35k temperature" (colorTemperature 35000)) []
       , Node (TS.TSNode "40 K" "40k temperature" (colorTemperature 40000)) []
@@ -236,6 +235,7 @@ myTreeNavigation = M.fromList
     , ((0, xK_l),      TS.moveChild)
     , ((0, xK_o),      TS.moveHistBack)
     , ((0, xK_i),      TS.moveHistForward)
+    , ((0, xK_s),      TS.moveTo ["Shutdown"])
     ]
 
 
@@ -244,7 +244,7 @@ myAdditionalKeysP = [
   -- Replace dmenu with rofi
   ("M-p", spawn "rofi -width 30 -show drun -theme ~/.config/rofi/themes/nord/nord.rasi"),
    -- Named Scratchpad bindings
-  ("M-g", namedScratchpadAction scratchpads "dropDownTerminal"),
+  ("M-g", namedScratchpadAction myScratchPads "dropdownTerminal"),
   -- Layout modifier bindings
   ("M-S-s", sendMessage MirrorShrink ),
   ("M-S-x", sendMessage MirrorExpand ),
