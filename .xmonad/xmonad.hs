@@ -11,7 +11,6 @@ import XMonad.Layout.LimitWindows
 import XMonad.Layout.NoBorders (noBorders, smartBorders)
 import XMonad.Layout.Spacing
 import XMonad.Layout.ResizableTile
-import XMonad.Layout.MouseResizableTile 
 import XMonad.Layout.Renamed
 import XMonad.Layout.SimplestFloat
 import XMonad.Layout.PerWorkspace
@@ -69,7 +68,7 @@ myFocusFollowsMouse = True
 myClickJustFocuses = False
 
 myLayoutHook =  onWorkspace "Main"
-                ( mouseResizableTallLayout
+                ( tallLayout
                   |||fullLayout 
                   ||| mirrorTallLayout 
                 )
@@ -80,11 +79,6 @@ myLayoutHook =  onWorkspace "Main"
               $ onWorkspace "Col" floatingLayout
               $ tallLayout ||| fullLayout
  
-mouseResizableTallLayout= renamed [Replace "Tile"]
-       $ limitWindows 3
-       $ smartBorders
-       $ avoidStruts
-       $ mouseResizableTile
 tallLayout = renamed [Replace "Tall"]
        $ limitWindows 3
        $ spacingRaw True (Border 0 5 0 5) True (Border 5 0 5 0) True 
