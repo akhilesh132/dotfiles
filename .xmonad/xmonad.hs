@@ -244,7 +244,7 @@ myAdditionalKeysP = [
   -- Replace dmenu with rofi
   ("M-p", spawn "rofi -width 30 -show drun -theme ~/.config/rofi/themes/nord/nord.rasi"),
    -- Named Scratchpad bindings
-  ("M-g", namedScratchpadAction myScratchPads "dropdownTerminal"),
+  ("M-C-<Return>", namedScratchpadAction myScratchPads "dropdownTerminal"),
   -- Layout modifier bindings
   ("M-S-s", sendMessage MirrorShrink ),
   ("M-S-x", sendMessage MirrorExpand ),
