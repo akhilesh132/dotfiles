@@ -26,3 +26,6 @@ wal -Rq  > /dev/null
 # manage dotfiles/config files with git
 alias dotfiles='git --git-dir=$HOME/.dotfiles --work-tree=$HOME'
 alias mynixos='git --git-dir=$HOME/.myNixOs --work-tree=/'
+
+# PATH variable
+export PATH=$PATH:${HOME}/.Xscripts

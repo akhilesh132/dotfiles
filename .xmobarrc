@@ -9,12 +9,11 @@ Config {
 ,  iconRoot =     "/home/akhilesh/.xmobar-icons/icons"
 ,  sepChar =  "%"       -- delineator between plugin names and straight text
 ,  alignSep = "}{"      -- separator between left-right alignment
-,  template = "   <icon=extra/nixos_16.xpm/>  %StdinReader% }  %date% { %mpris2% %alsa:default:Master% %disku% %memory% %multicpu% %wlp6s0%  "
+,  template = "   <icon=extra/nixos_16.xpm/>  %StdinReader% }  %date% { %mpris2% <icon=extra/microphone-icon_22.xpm/> %micvolume% %alsa:default:Master%  %disku% %memory% %multicpu% %wlp6s0%  "
 ,  commands = 
         [
-         Run Alsa "default" "Master" ["-t", " <icon=extra/vol.xpm/>  <volume>% <status>" 
-                                      , "-H", "80", "-c", "red"
-                                       
+         Run Alsa "default" "Master" ["-t", " <icon=extra/vol.xpm/>  <volume>% <status>", "--" 
+                                      , "--off","[ MUTE ]"
                                      ] 
         -- Disk usage 
          , Run DiskU          [("/","<icon=extra/ssd_24_18.xpm/> /: <usedp>%")] 
@@ -25,13 +24,13 @@ Config {
        , Run Memory          [ "-t", "<icon=extra/memory-icon_24.xpm/> <usedratio>%"
                              , "-L", "20", "-l", "grey" , "-H", "90", "-h", "darkred"
                              , "-w", "2"
-                             ] 50
+                             ] 20
 
         -- cpu activity monitor
         , Run MultiCpu       [ "-t" , "<icon=extra/cpu-icon_24.xpm/><total>%"
                              , "-L", "50", "-l", "grey", "-H", "85", "-h", "darkred"
                              , "-w",  "2"
-                             ] 50
+                             ] 20
 
         -- network activity monitor (dynamic interface resolution)
         -- threshold units: B/s
@@ -47,6 +46,7 @@ Config {
          , Run Com "uname" ["-s","-r"] "" 0
          , Run Mpris2 "spotify" ["-t", "<icon=extra/music.xpm/><fc=#b19cd9><title></fc>" , "-M", "30"] 10
          , Run StdinReader
+         , Run Com "sh" ["/home/akhilesh/.Xscripts/micVolume"] "micvolume" 10
 
         ]
 }
