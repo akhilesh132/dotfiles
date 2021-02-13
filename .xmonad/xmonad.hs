@@ -269,8 +269,10 @@ myAdditionalKeysP = [
   ("M-x t", treeselectAction tsDefaultConfig),
   ("M-<Backspace>", spawn "feh --bg-fill $(find ~/Wallpapers | shuf -n 1)"),
  -- Multimedia key bindings
- ("M-<Down>", spawn ("pamixer --decrease 5")),
- ("M-<Up>", spawn ("pamixer --increase 5"))
+ ("M-<Up>",     spawn ("amixer set Master 5%+")),
+ ("M-<Down>",   spawn ("amixer set Master 5%-")),
+ ("M-S-<Up>",   spawn ("amixer set Capture 10%+")),
+ ("M-S-<Down>", spawn ("amixer set Capture 10%-"))
  ]
 
 myAdditionalMouseBindings = [

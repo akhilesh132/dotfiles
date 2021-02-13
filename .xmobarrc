@@ -9,11 +9,11 @@ Config {
 ,  iconRoot =     "/home/akhilesh/.xmobar-icons/icons"
 ,  sepChar =  "%"       -- delineator between plugin names and straight text
 ,  alignSep = "}{"      -- separator between left-right alignment
-,  template = "   <icon=extra/nixos_16.xpm/>  %StdinReader% }  %date% { %mpris2% <icon=extra/microphone-icon_22.xpm/> %micvolume% %alsa:default:Master%  %disku% %memory% %multicpu% %wlp6s0%  "
+,  template = "   <icon=extra/nixos_16.xpm/>  %StdinReader% }  %date% { %mpris2% <icon=extra/microphone-icon_22.xpm/> %micvolumeLevel% <fc=#c9c062> %micStatus% </fc> %alsa:default:Master%  %disku% %memory% %multicpu% %wlp6s0%  "
 ,  commands = 
         [
          Run Alsa "default" "Master" ["-t", " <icon=extra/vol.xpm/>  <volume>% <status>", "--" 
-                                      , "--off","[ MUTE ]"
+                                      , "--off","[ MUTE ]", "--onc", "#acdf87"
                                      ] 
         -- Disk usage 
          , Run DiskU          [("/","<icon=extra/ssd_24_18.xpm/> /: <usedp>%")] 
@@ -46,7 +46,8 @@ Config {
          , Run Com "uname" ["-s","-r"] "" 0
          , Run Mpris2 "spotify" ["-t", "<icon=extra/music.xpm/><fc=#b19cd9><title></fc>" , "-M", "30"] 10
          , Run StdinReader
-         , Run Com "sh" ["/home/akhilesh/.Xscripts/micVolume"] "micvolume" 10
+         , Run Com "sh" ["/home/akhilesh/.Xscripts/micVolumeLevel"] "micvolumeLevel" 10
+         , Run Com "sh" ["/home/akhilesh/.Xscripts/micStatus"] "micStatus" 10
 
         ]
 }
