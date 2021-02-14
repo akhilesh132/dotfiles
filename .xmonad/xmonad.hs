@@ -5,7 +5,6 @@ import XMonad.Hooks.DynamicLog
 import XMonad.Hooks.ManageDocks
 import XMonad.Hooks.EwmhDesktops
 import XMonad.Hooks.ManageHelpers
-import XMonad.Hooks.Place
 import XMonad.Layout.Fullscreen ( fullscreenManageHook, fullscreenSupport )
 import XMonad.Layout.LimitWindows
 import XMonad.Layout.NoBorders (noBorders, smartBorders)
@@ -117,19 +116,16 @@ myScratchPads = [
                         w = 0.50
                         h = 0.50
 
-myManageHook = composeOne
-  [
+myManageHook = composeOne [
     transience      --move transient windows to their parent
   , isDialog        -?> doCenterFloat
   , isFullscreen    -?> doFullFloat
-  ] <+> composeAll
-  [
+  ] <+> composeAll [
     manageDocks,
+    manageHook defaultConfig,
     floatingWindowsHook,
     fullscreenManageHook,
-    namedScratchpadManageHook myScratchPads,
-    placeHook simpleSmart,
-    manageHook defaultConfig
+    namedScratchpadManageHook myScratchPads
  ] 
 
 floatingWindowsHook = composeAll [
