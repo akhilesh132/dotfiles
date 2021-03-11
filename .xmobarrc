@@ -4,12 +4,13 @@ Config {
 ,font    = "xft:Ubuntu:weight=bold:pixelsize=12:antialias=true:hinting=true"
 ,additionalFonts = [ "xft:Mononoki Nerd Font:pixelsize=11:antialias=true:hinting=true"
                     ,"xft:FontAwesome:pixelsize=13"
+                    ,"xft:Bitstream Vera Sans Mono:Bold:size=9:antialias=true"
                     ]
 
 ,  iconRoot =     "/home/akhilesh/.xmobar-icons/icons"
-,  sepChar =  "%"       -- delineator between plugin names and straight text
+,  sepChar =  "$"       -- delineator between plugin names and straight text
 ,  alignSep = "}{"      -- separator between left-right alignment
-,  template = "   <icon=extra/nixos_16.xpm/>  %StdinReader% }  %date% { %mpris2% <icon=extra/microphone-icon_22.xpm/> %micvolumeLevel% <fc=#c9c062> %micStatus% </fc> %alsa:default:Master%  %disku% %memory% %multicpu% %wlp6s0%  "
+,  template = " $date$  <icon=extra/nixos_16.xpm/>  $StdinReader$ } { $mpris2$ <icon=/home/akhilesh/brightness.xpm/>  $brightness$% <icon=extra/microphone-icon_22.xpm/> $micvolumeLevel$ <fc=#c9c062> $micStatus$ </fc> $alsa:default:Master$  $disku$ $memory$ $multicpu$ $wlp6s0$  "
 ,  commands = 
         [
          Run Alsa "default" "Master" ["-t", " <icon=extra/vol.xpm/>  <volume>% <status>", "--" 
@@ -27,14 +28,14 @@ Config {
                              ] 20
 
         -- cpu activity monitor
-        , Run MultiCpu       [ "-t" , "<icon=extra/cpu-icon_24.xpm/><total>%"
+        , Run MultiCpu       [ "-t" , "<fn=3><icon=extra/cpu-icon_24.xpm/><total>%</fn>"
                              , "-L", "50", "-l", "grey", "-H", "85", "-h", "darkred"
                              , "-w",  "2"
                              ] 20
 
         -- network activity monitor (dynamic interface resolution)
         -- threshold units: B/s
-        , Run Network "wlp6s0"  [ "-t" , "<icon=extra/wifi-icon_16.xpm/><up> <dev>: <icon=extra/down_arrow_1_14.xpm/> <rx> kB/s <icon=extra/up_arrow_1_14.xpm/> <tx> kB/s"
+        , Run Network "wlp6s0"  [ "-t" , "<icon=extra/wifi-icon_16.xpm/><up> <dev>: <icon=extra/down_arrow_1_14.xpm/> <fn=3><rx></fn> kB/s <icon=extra/up_arrow_1_14.xpm/> <fn=3><tx></fn> kB/s"
                              , "-L", "1000", "-H", "5000"
                              , "-w", "3"
                              ] 10
@@ -48,6 +49,7 @@ Config {
          , Run StdinReader
          , Run Com "sh" ["/home/akhilesh/.Xscripts/micVolumeLevel"] "micvolumeLevel" 10
          , Run Com "sh" ["/home/akhilesh/.Xscripts/micStatus"] "micStatus" 10
+         , Run Com "cat" ["/home/akhilesh/.brightness/actual_brightness"] "brightness" 10
 
         ]
 }

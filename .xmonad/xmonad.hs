@@ -264,11 +264,14 @@ myAdditionalKeysP = [
   -- Utilities and extensions
   ("M-x t", treeselectAction tsDefaultConfig),
   ("M-<Backspace>", spawn "feh --bg-fill $(find ~/Wallpapers | shuf -n 1)"),
+  ("M-<Escape>", spawn "i3lock-color -c 222222"),
  -- Multimedia key bindings
  ("M-<Up>",     spawn ("amixer set Master 5%+")),
  ("M-<Down>",   spawn ("amixer set Master 5%-")),
  ("M-S-<Up>",   spawn ("amixer set Capture 10%+")),
- ("M-S-<Down>", spawn ("amixer set Capture 10%-"))
+ ("M-S-<Down>", spawn ("amixer set Capture 10%-")),
+ ("M-C-<Up>",   spawn ("sh /home/akhilesh/.brightness/incBrightness")),
+ ("M-C-<Down>",   spawn ("sh /home/akhilesh/.brightness/dcrBrightness"))
  ]
 
 myAdditionalMouseBindings = [
