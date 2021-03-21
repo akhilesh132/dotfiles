@@ -10,7 +10,7 @@ Config {
 ,  iconRoot =     "/home/akhilesh/.xmobar-icons/icons"
 ,  sepChar =  "$"       -- delineator between plugin names and straight text
 ,  alignSep = "}{"      -- separator between left-right alignment
-,  template = " $date$  <icon=extra/nixos_16.xpm/>  $StdinReader$ } { $mpris2$ <icon=/home/akhilesh/brightness.xpm/>  $brightness$% <icon=extra/microphone-icon_22.xpm/> $micvolumeLevel$ <fc=#c9c062> $micStatus$ </fc> $alsa:default:Master$  $disku$ $memory$ $multicpu$ $wlp6s0$  "
+,  template = " $date$  <icon=extra/nixos_16.xpm/>  $StdinReader$ } { $mpris2$  <icon=extra/microphone-icon_22.xpm/> $micvolumeLevel$ <fc=#c9c062> $micStatus$ </fc> $alsa:default:Master$  $disku$ $memory$ $multicpu$ $wlp6s0$  "
 ,  commands = 
         [
          Run Alsa "default" "Master" ["-t", " <icon=extra/vol.xpm/>  <volume>% <status>", "--" 
@@ -49,7 +49,6 @@ Config {
          , Run StdinReader
          , Run Com "sh" ["/home/akhilesh/.Xscripts/micVolumeLevel"] "micvolumeLevel" 10
          , Run Com "sh" ["/home/akhilesh/.Xscripts/micStatus"] "micStatus" 10
-         , Run Com "cat" ["/home/akhilesh/.brightness/actual_brightness"] "brightness" 10
 
         ]
 }
