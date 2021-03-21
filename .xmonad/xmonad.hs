@@ -156,16 +156,27 @@ myXPConfig = def
   }
 
 treeselectAction a = TS.treeselectAction a
-   [ Node (TS.TSNode "+ Audio" "Adjust system audio" (return ())) 
-      [ Node (TS.TSNode "Toggle Mute" "Toogle Mute" (spawn toggleMuteCmd)) []
-      , Node (TS.TSNode "90%" "90% Volume" (volume 90)) []
-      , Node (TS.TSNode "80%" "80% Volume" (volume 80)) []
-      , Node (TS.TSNode "70%" "70% Volume" (volume 70)) []
-      , Node (TS.TSNode "60%" "60% Volume" (volume 60)) []
-      , Node (TS.TSNode "50%" "50% Volume" (volume 50)) []
-      , Node (TS.TSNode "40%" "40% Volume" (volume 40)) []
-      , Node (TS.TSNode "30%" "30% Volume" (volume 30)) []
-      , Node (TS.TSNode "20%" "20% Volume" (volume 20)) []
+   [ Node (TS.TSNode "+ Sound" "Adjust system audio" (return ())) 
+      [ Node (TS.TSNode "Toggle Mute" "Toogle Mute" (spawn toggleSoundMuteCmd)) []
+      , Node (TS.TSNode "90%" "90% Volume" (soundVolume 90)) []
+      , Node (TS.TSNode "80%" "80% Volume" (soundVolume 80)) []
+      , Node (TS.TSNode "70%" "70% Volume" (soundVolume 70)) []
+      , Node (TS.TSNode "60%" "60% Volume" (soundVolume 60)) []
+      , Node (TS.TSNode "50%" "50% Volume" (soundVolume 50)) []
+      , Node (TS.TSNode "40%" "40% Volume" (soundVolume 40)) []
+      , Node (TS.TSNode "30%" "30% Volume" (soundVolume 30)) []
+      , Node (TS.TSNode "20%" "20% Volume" (soundVolume 20)) []
+      ]
+   , Node (TS.TSNode "+ Microphone" "Adjust system microphone" (return ())) 
+      [ Node (TS.TSNode "Toggle Mute" "Toogle Mute" (spawn toggleMicrophoneMuteCmd)) []
+      , Node (TS.TSNode "90%" "90% Volume" (microphoneVolume 90)) []
+      , Node (TS.TSNode "80%" "80% Volume" (microphoneVolume 80)) []
+      , Node (TS.TSNode "70%" "70% Volume" (microphoneVolume 70)) []
+      , Node (TS.TSNode "60%" "60% Volume" (microphoneVolume 60)) []
+      , Node (TS.TSNode "50%" "50% Volume" (microphoneVolume 50)) []
+      , Node (TS.TSNode "40%" "40% Volume" (microphoneVolume 40)) []
+      , Node (TS.TSNode "30%" "30% Volume" (microphoneVolume 30)) []
+      , Node (TS.TSNode "20%" "20% Volume" (microphoneVolume 20)) []
       ]
    , Node (TS.TSNode "+ Brightness" "Adjust system brightness" (return ())) 
       [ Node (TS.TSNode "Full" "Full Brightness" (brightness 0.99)) []
@@ -190,8 +201,13 @@ treeselectAction a = TS.treeselectAction a
       ]
    , Node (TS.TSNode "Shutdown" "Poweroff" (spawn "poweroff")) []
    ]
-toggleMuteCmd = "amixer -q sset Master toggle"
-volume percentage = spawn ("amixer -M set Master " ++ show percentage ++ "%")
+
+toggleSoundMuteCmd = "amixer -q sset Master toggle"
+toggleMicrophoneMuteCmd = "amixer -q sset Capture toggle"
+
+soundVolume percentage = spawn ("amixer -M set Master " ++ show percentage ++ "%")
+microphoneVolume percentage = spawn ("amixer -M set Capture " ++ show percentage ++ "%")
+
 brightness percentage = spawn ("redshift -P -o -l 24:84 -b " ++ show percentage)
 colorTemperature temperature =   spawn ("redshift -P -l 24:84 -O "++ show temperature) 
 
