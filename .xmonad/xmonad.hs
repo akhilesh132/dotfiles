@@ -138,9 +138,6 @@ floatingWindowsHook = composeAll [
 
 myHandleEventHook = fullscreenEventHook
 
--- State variable init
-brightnessVal = 0.6
-
 myStartupHook = return()
 
 --  Customize the way 'XMonad.Prompt' looks and behaves.
@@ -200,6 +197,7 @@ treeselectAction a = TS.treeselectAction a
       , Node (TS.TSNode "65 K" "65k temperature" (colorTemperature 65000)) []
       ]
    , Node (TS.TSNode "Shutdown" "Poweroff" (spawn "poweroff")) []
+   , Node (TS.TSNode "Reboot"   "Reboot"   (spawn "reboot")) []
    ]
 
 toggleSoundMuteCmd = "amixer -q sset Master toggle"
