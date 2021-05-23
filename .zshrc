@@ -90,3 +90,72 @@ zle -N down-line-or-beginning-search
 [[ -n "${key[Up]}"   ]] && bindkey -- "${key[Up]}"   up-line-or-beginning-search
 [[ -n "${key[Down]}" ]] && bindkey -- "${key[Down]}" down-line-or-beginning-search
 
+
+# }}}
+#-------- History {{{
+#------------------------------------------------------
+# get more info: $man zshoptions
+setopt APPEND_HISTORY
+setopt EXTENDED_HISTORY
+setopt HIST_FIND_NO_DUPS
+setopt HIST_IGNORE_ALL_DUPS
+setopt HIST_IGNORE_DUPS
+setopt HIST_IGNORE_SPACE
+setopt HIST_NO_STORE
+setopt HIST_REDUCE_BLANKS
+setopt HIST_SAVE_NO_DUPS
+setopt HIST_EXPIRE_DUPS_FIRST
+setopt HIST_FIND_NO_DUPS
+setopt HIST_VERIFY
+setopt SHARE_HISTORY
+setopt INTERACTIVE_COMMENTS        # pound sign in interactive prompt
+HISTFILE=~/.zsh_history            # where to save zsh history
+HISTSIZE=10000
+SAVEHIST=10000
+cfg-history() { $EDITOR $HISTFILE ;}
+
+# }}}
+#-------- Autocomplete {{{
+#------------------------------------------------------
+# http://www.refining-linux.org/archives/40/ZSH-Gem-5-Menu-selection/
+# https://github.com/robbyrussell/oh-my-zsh/blob/master/lib/completion.zsh
+
+autoload -U compinit && compinit        # enable autocompletion
+fpath+=(~/.zsh/completion)              # set path to custom autocompletion
+zstyle ':completion:*' menu select      # to activate the menu, press tab twice
+
+# do not autoselect the first completion entry
+unsetopt menu_complete
+
+# autocompletion CLI switches for aliases
+setopt completealiases
+
+zstyle ':completion:*' list-colors ''   # show colors on menu completion
+
+# http://unix.stackexchange.com/a/297000
+# tab completion from both ends
+setopt complete_in_word
+setopt glob_complete                    # wildcard completion eg. *-tar
+
+# setopt auto_menu         # show completion menu on succesive tab press
+# setopt always_to_end
+
+# show dots if tab compeletion is taking long to load
+expand-or-complete-with-dots() {
+  echo -n "\e[31m......\e[0m"
+  zle expand-or-complete
+  zle redisplay
+}
+zle -N expand-or-complete-with-dots
+bindkey "^I" expand-or-complete-with-dots
+
+# autocomplete case-insensitive (all),partial-word and then substring
+zstyle ':completion:*' matcher-list 'm:{a-zA-Z-_}={A-Za-z_-}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'
+
+# better completion for killall
+zstyle ':completion:*:killall:*' command 'ps -u $USER -o cmd'
+
+# when new programs is installed, auto update autocomplete without reloading shell
+zstyle ':completion:*' rehash true
+
+
