@@ -66,16 +66,16 @@ myTerminal = "alacritty"
 myFocusFollowsMouse = True
 myClickJustFocuses = False
 
-myLayoutHook =  onWorkspace "Main"
+myLayoutHook =  onWorkspace "1"
                 ( tallLayout
                   |||fullLayout 
                   ||| mirrorTallLayout 
                 )
-              $ onWorkspace "Web" 
+              $ onWorkspace "2" 
                 ( fullLayout
                   ||| tallLayout 
                 )
-              $ onWorkspace "Col" floatingLayout
+              $ onWorkspace "3" floatingLayout
               $ tallLayout ||| fullLayout
  
 tallLayout = renamed [Replace "Tall"]

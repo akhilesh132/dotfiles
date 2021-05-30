@@ -120,8 +120,6 @@ cfg-history() { $EDITOR $HISTFILE ;}
 # http://www.refining-linux.org/archives/40/ZSH-Gem-5-Menu-selection/
 # https://github.com/robbyrussell/oh-my-zsh/blob/master/lib/completion.zsh
 
-autoload -U compinit && compinit        # enable autocompletion
-fpath+=(~/.zsh/completion)              # set path to custom autocompletion
 zstyle ':completion:*' menu select      # to activate the menu, press tab twice
 
 # do not autoselect the first completion entry
@@ -130,7 +128,6 @@ unsetopt menu_complete
 # autocompletion CLI switches for aliases
 setopt completealiases
 
-zstyle ':completion:*' list-colors ''   # show colors on menu completion
 
 # http://unix.stackexchange.com/a/297000
 # tab completion from both ends
