@@ -16,7 +16,6 @@ import XMonad.Layout.PerWorkspace
 import XMonad.Util.Run(spawnPipe, hPutStrLn)
 import XMonad.Util.SpawnOnce
 import XMonad.Util.EZConfig
-import XMonad.Wallpaper
 import XMonad.Util.NamedScratchpad
 import XMonad.Actions.CopyWindow
 import XMonad.Actions.WithAll
@@ -42,7 +41,6 @@ import qualified Data.Map as M
 main = do
     spawn "${HOME}/.bin/picom --experimental-backends -b &"
     xmproc <- spawnPipe "xmobar ~/.xmobarrc"
-    setRandomWallpaper [ "$HOME/Wallpapers" ]
     xmonad $fullscreenSupport $docks $ewmh desktopConfig
       { terminal   =      myTerminal,
         borderWidth =     myBorderWidth,
@@ -277,15 +275,13 @@ myAdditionalKeysP = [
   ("M-s y", promptSearch myXPConfig youtube),
   -- Utilities and extensions
   ("M-x t", treeselectAction tsDefaultConfig),
-  ("M-<Backspace>", spawn "feh --bg-fill $(find ~/Wallpapers | shuf -n 1)"),
+  ("M-<Backspace>", spawn "sh /home/akhilesh/.repo/styli.sh/styli.sh"),
   ("M-<Escape>", spawn "i3lock-color -c 222222"),
  -- Multimedia key bindings
  ("M-<Up>",     spawn ("amixer set Master 5%+")),
  ("M-<Down>",   spawn ("amixer set Master 5%-")),
  ("M-S-<Up>",   spawn ("amixer set Capture 10%+")),
- ("M-S-<Down>", spawn ("amixer set Capture 10%-")),
- ("M-C-<Up>",   spawn ("sh /home/akhilesh/.brightness/incBrightness")),
- ("M-C-<Down>",   spawn ("sh /home/akhilesh/.brightness/dcrBrightness"))
+ ("M-S-<Down>", spawn ("amixer set Capture 10%-"))
  ]
 
 myAdditionalMouseBindings = [
