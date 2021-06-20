@@ -32,7 +32,7 @@ import XMonad.Prompt.ConfirmPrompt
 import XMonad.Prompt.Shell
 import XMonad.Prompt.Window
 import qualified  XMonad.StackSet as W
-
+import XMonad.Wallpaper
 import Data.Monoid
 import Data.Tree
 import qualified Data.Map as M
@@ -41,6 +41,7 @@ import qualified Data.Map as M
 main = do
     spawn "${HOME}/.bin/picom --experimental-backends -b &"
     xmproc <- spawnPipe "xmobar ~/.xmobarrc"
+    setRandomWallpaper [ "$HOME/Pictures/Wallpapers" ]
     xmonad $fullscreenSupport $docks $ewmh desktopConfig
       { terminal   =      myTerminal,
         borderWidth =     myBorderWidth,
@@ -185,14 +186,16 @@ treeselectAction a = TS.treeselectAction a
       , Node (TS.TSNode "90%" "90% Brightness" (brightness 0.90)) []
       ]
    , Node (TS.TSNode "+ Color Temperature" "Adjust color temperature" (return ())) 
-      [ Node (TS.TSNode "30 K" "30k temperature" (colorTemperature 30000)) []
-      , Node (TS.TSNode "35 K" "35k temperature" (colorTemperature 35000)) []
-      , Node (TS.TSNode "40 K" "40k temperature" (colorTemperature 40000)) []
-      , Node (TS.TSNode "45 K" "45k temperature" (colorTemperature 45000)) [] 
-      , Node (TS.TSNode "50 K" "50k temperature" (colorTemperature 50000)) []
-      , Node (TS.TSNode "55 K" "55k temperature" (colorTemperature 55000)) []
-      , Node (TS.TSNode "60 K" "60k temperature" (colorTemperature 60000)) []
-      , Node (TS.TSNode "65 K" "65k temperature" (colorTemperature 65000)) []
+      [ Node (TS.TSNode "3000 K" "3000k temperature" (colorTemperature 3000)) []
+      , Node (TS.TSNode "3500 K" "3500k temperature" (colorTemperature 3500)) []
+      , Node (TS.TSNode "4000 K" "4000k temperature" (colorTemperature 4000)) []
+      , Node (TS.TSNode "4500 K" "4500k temperature" (colorTemperature 4500)) []
+      , Node (TS.TSNode "5000 K" "5000k temperature" (colorTemperature 5000)) []
+      , Node (TS.TSNode "6000K" "6000k temperature" (colorTemperature 6000)) [] 
+      , Node (TS.TSNode "10000K" "10000k temperature" (colorTemperature 10000)) []
+      , Node (TS.TSNode "15000K" "15000k temperature" (colorTemperature 15000)) []
+      , Node (TS.TSNode "20000K" "20000k temperature" (colorTemperature 20000)) []
+      , Node (TS.TSNode "25000K" "25000k temperature" (colorTemperature 25000)) []
       ]
    , Node (TS.TSNode "Shutdown" "Poweroff" (spawn "poweroff")) []
    , Node (TS.TSNode "Reboot"   "Reboot"   (spawn "reboot")) []
@@ -205,7 +208,7 @@ soundVolume percentage = spawn ("amixer -M set Master " ++ show percentage ++ "%
 microphoneVolume percentage = spawn ("amixer -M set Capture " ++ show percentage ++ "%")
 
 brightness percentage = spawn ("redshift -P -o -l 24:84 -b " ++ show percentage)
-colorTemperature temperature =   spawn ("redshift -P -l 24:84 -O "++ show temperature) 
+colorTemperature temperature =   spawn ("redshift -P -l 24:84 -O "++ show temperature ++ "k") 
 
 tsDefaultConfig = TS.TSConfig { TS.ts_hidechildren = True
                               , TS.ts_background   = 0xdd282c34
@@ -275,13 +278,16 @@ myAdditionalKeysP = [
   ("M-s y", promptSearch myXPConfig youtube),
   -- Utilities and extensions
   ("M-x t", treeselectAction tsDefaultConfig),
-  ("M-<Backspace>", spawn "sh /home/akhilesh/.repo/styli.sh/styli.sh"),
+  ("M-<Backspace>", spawn "sh /home/akhilesh/.repo/styli.sh/styli.sh -w 1920 -h 1080"),
   ("M-<Escape>", spawn "i3lock-color -c 222222"),
  -- Multimedia key bindings
- ("M-<Up>",     spawn ("amixer set Master 5%+")),
- ("M-<Down>",   spawn ("amixer set Master 5%-")),
- ("M-S-<Up>",   spawn ("amixer set Capture 10%+")),
- ("M-S-<Down>", spawn ("amixer set Capture 10%-"))
+ ("M-<Up>",                     spawn ("amixer set Master 5%+")),
+ ("<XF86AudioRaiseVolume>",     spawn ("amixer set Master 5%+")),
+ ("<XF86AudioMute>",            spawn ("amixer -q sset Master toggle")),
+ ("M-<Down>",                   spawn ("amixer set Master 5%-")),
+ ("<XF86AudioLowerVolume>",     spawn ("amixer set Master 5%-")),
+ ("M-S-<Up>",                   spawn ("amixer set Capture 10%+")),
+ ("M-S-<Down>",                 spawn ("amixer set Capture 10%-"))
  ]
 
 myAdditionalMouseBindings = [
