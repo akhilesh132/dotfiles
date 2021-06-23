@@ -287,7 +287,11 @@ myAdditionalKeysP = [
  ("M-<Down>",                   spawn ("amixer set Master 5%-")),
  ("<XF86AudioLowerVolume>",     spawn ("amixer set Master 5%-")),
  ("M-S-<Up>",                   spawn ("amixer set Capture 10%+")),
- ("M-S-<Down>",                 spawn ("amixer set Capture 10%-"))
+ ("M-S-<Down>",                 spawn ("amixer set Capture 10%-")),
+ ("<XF86AudioPlay>",     spawn ("playerctl play-pause")),
+ ("<XF86AudioStop>",     spawn ("playerctl stop")),
+ ("<XF86AudioPrev>",     spawn ("playerctl previous")),
+ ("<XF86AudioNext>",     spawn ("playerctl next"))
  ]
 
 myAdditionalMouseBindings = [
