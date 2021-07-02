@@ -40,6 +40,7 @@ import qualified Data.Map as M
 
 main = do
     spawn "${HOME}/.bin/picom --experimental-backends -b &"
+    spawn "xbrightness 65535"
     xmproc <- spawnPipe "xmobar ~/.xmobarrc"
     setRandomWallpaper [ "$HOME/Pictures/Wallpapers" ]
     xmonad $fullscreenSupport $docks $ewmh desktopConfig
@@ -288,6 +289,8 @@ myAdditionalKeysP = [
  ("<XF86AudioLowerVolume>",     spawn ("amixer set Master 5%-")),
  ("M-S-<Up>",                   spawn ("amixer set Capture 10%+")),
  ("M-S-<Down>",                 spawn ("amixer set Capture 10%-")),
+ ("M-C-<Up>",                   spawn ("xbrightness +1000")),
+ ("M-C-<Down>",                 spawn ("xbrightness -1000")),
  ("<XF86AudioPlay>",     spawn ("playerctl play-pause")),
  ("<XF86AudioStop>",     spawn ("playerctl stop")),
  ("<XF86AudioPrev>",     spawn ("playerctl previous")),
