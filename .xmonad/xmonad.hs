@@ -42,7 +42,7 @@ main = do
     spawn "${HOME}/.bin/picom --experimental-backends -b &"
     spawn "xbrightness 65535"
     xmproc <- spawnPipe "xmobar ~/.xmobarrc"
-    setRandomWallpaper [ "$HOME/Pictures/Wallpapers" ]
+    setRandomWallpaper [ "$HOME/Wallpapers" ]
     xmonad $fullscreenSupport $docks $ewmh desktopConfig
       { terminal   =      myTerminal,
         borderWidth =     myBorderWidth,
