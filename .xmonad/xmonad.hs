@@ -152,6 +152,7 @@ myAdditionalKeysP = [
   ("M-<Return>", promote),
   -- Replace dmenu with rofi
   ("M-p", spawn "rofi -width 30 -show drun -theme ~/.config/rofi/themes/nord/nord.rasi"),
+  ("M-o", spawn "rofi -width 30 -show window -theme ~/.config/rofi/themes/nord/nord.rasi"),
    -- Named Scratchpad bindings
   ("M-C-<Return>", namedScratchpadAction myScratchPads "dropdownTerminal"),
   -- Layout modifier bindings
@@ -188,8 +189,10 @@ myAdditionalKeysP = [
  ("M-<Down>",                   spawn ("amixer set Master 5%-")),
  ("M-S-<Up>",                   spawn ("amixer set Capture 10%+")),
  ("M-S-<Down>",                 spawn ("amixer set Capture 10%-")),
- ("M-C-<Up>",                   spawn ("xbrightness +1500")),
- ("M-C-<Down>",                 spawn ("xbrightness -1500")),
+ ("M-C-<Up>",                   spawn ("xbrightness +1000 +1000 +1000")),
+ ("M-C-<Down>",                 spawn ("xbrightness -1000 -1000 -1000")),
+ ("M-M1-<Down>",                spawn ("xbrightness -500 -1500 -2000")),
+ ("M-M1-<Up>",                  spawn ("xbrightness +500 +1500 +2000")),
  ("<XF86AudioLowerVolume>",     spawn ("amixer set Master 5%-")),
  ("<XF86AudioRaiseVolume>",     spawn ("amixer set Master 5%+")),
  ("<XF86AudioMute>",            spawn ("amixer -q sset Master toggle")),

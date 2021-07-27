@@ -10,7 +10,7 @@ Config {
 ,  iconRoot =     "/home/akhilesh/.xmobar-icons/icons"
 ,  sepChar =  "$"       -- delineator between plugin names and straight text
 ,  alignSep = "}{"      -- separator between left-right alignment
-,  template = " $date$  <icon=extra/nixos_16.xpm/>  $StdinReader$ } { $mpris2$  <icon=extra/microphone-icon_22.xpm/> $micvolumeLevel$ <fc=#c9c062> $micStatus$ </fc> $alsa:default:Master$  $disku$ $memory$ $multicpu$ $wlp6s0$  "
+,  template = " $date$  <icon=extra/nixos_16.xpm/>  $StdinReader$ } { $mpris2$  <icon=extra/microphone-icon_22.xpm/> $micvolumeLevel$ <fc=#c9c062> $micStatus$ </fc> $alsa:default:Master$  $disku$ $memory$ $multicpu$ $wlp6s0$ $wlp6s0wi$ "
 ,  commands = 
         [
          Run Alsa "default" "Master" ["-t", " <icon=extra/vol.xpm/>  <volume>% <status>", "--" 
@@ -40,6 +40,8 @@ Config {
                              , "-w", "3"
                              ] 10
 
+        , Run Wireless "wlp6s0"  [ "-t" , "<fn=3><fc=orange>[ <essid> ] </fc></fn>"
+                             ] 10
         -- time and date indicator 
         --   (%e = day of month, %b month name %a = day of week, %r = 12 hour format)
         , Run Date           "<icon=extra/calendar-clock-icon_16.xpm/> <fc=#CBCBCB>%e %b %Y</fc> <fc=lightgreen>(%a)</fc> <fc=orange>%r</fc>" "date" 10

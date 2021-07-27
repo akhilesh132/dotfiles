@@ -1,12 +1,3 @@
-pfetch | lolcat
-
-# Zplug - next gen zsh plugin manager
-source ~/.zplug/init.zsh
-
-zplug "plugins/fasd", from:oh-my-zsh
-zplug "plugins/zsh-interactive-cd", from:oh-my-zsh
-zplug "plugins/emoji", from:oh-my-zsh
-zplug load
 
 # https://github.com/sharkdp/vivid/tree/master/themes
 # Vivid LS_COLORS generator
