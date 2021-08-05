@@ -17,9 +17,14 @@ Config {
                                       , "--off","[ MUTE ]", "--onc", "#acdf87"
                                      ] 
         -- Disk usage 
-         , Run DiskU          [("/","<icon=extra/ssd_24_18.xpm/> /: <usedp>%")] 
-                             [ "-L","50", "-l", "grey"]
-                             300
+         , Run DiskU          
+                 [("/","<icon=extra/ssd_24_18.xpm/> /: <usedp>% <icon=extra/harddisk-icon_16.xpm/> "),
+                  ("/home/akhilesh/Alpha","A: <usedp>%"),
+                  ("/home/akhilesh/Bravo","B: <usedp>%"),
+                  ("/home/akhilesh/Charlie","C: <usedp>%")
+                 ] 
+                 [ "-L","50", "-l", "grey"]
+                 300
 
         -- memory usage monitor
        , Run Memory          [ "-t", "<icon=extra/memory-icon_24.xpm/> <usedratio>%"
