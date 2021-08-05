@@ -182,7 +182,7 @@ myAdditionalKeysP = [
   ("M-s w", promptSearch myXPConfig wikipedia),
   ("M-s y", promptSearch myXPConfig youtube),
   -- Utilities and extensions
-  ("M-<Backspace>", spawn "sh $HOME/.repo/styli.sh/styli.sh -w 1920 -h 1080"),
+  ("M-<Backspace>", spawn "sh $HOME/.repo/styli.sh/styli.sh -w 1920 -h 1080 -s nature"),
   ("M-<Escape>", spawn "i3lock-color -c 222222"),
  -- Multimedia key bindings
  ("M-<Up>",                     spawn ("amixer set Master 5%+")),

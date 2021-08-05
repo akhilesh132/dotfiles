@@ -10,7 +10,7 @@ Config {
 ,  iconRoot =     "/home/akhilesh/.xmobar-icons/icons"
 ,  sepChar =  "$"       -- delineator between plugin names and straight text
 ,  alignSep = "}{"      -- separator between left-right alignment
-,  template = " $date$  <icon=extra/nixos_16.xpm/>  $StdinReader$ } { $mpris2$  <icon=extra/microphone-icon_22.xpm/> $micvolumeLevel$ <fc=#c9c062> $micStatus$ </fc> $alsa:default:Master$  $disku$ $memory$ $multicpu$ $wlp6s0$ $wlp6s0wi$ "
+,  template = " $date$  <icon=extra/nixos_16.xpm/>  $StdinReader$ } { $mpris2$  <icon=extra/microphone-icon_22.xpm/> $micvolumeLevel$ <fc=#c9c062> $micStatus$ </fc> $alsa:default:Master$  $disku$ $memory$ $multicpu$ $wlp6s0wi$ $wlp6s0$ "
 ,  commands = 
         [
          Run Alsa "default" "Master" ["-t", " <icon=extra/vol.xpm/>  <volume>% <status>", "--" 
@@ -35,12 +35,12 @@ Config {
 
         -- network activity monitor (dynamic interface resolution)
         -- threshold units: B/s
-        , Run Network "wlp6s0"  [ "-t" , "<icon=extra/wifi-icon_16.xpm/><up> <dev>: <icon=extra/down_arrow_1_14.xpm/> <fn=3><rx></fn> kB/s <icon=extra/up_arrow_1_14.xpm/> <fn=3><tx></fn> kB/s"
+        , Run Network "wlp6s0"  [ "-t" , "<dev>: <icon=extra/down_arrow_1_14.xpm/> <fn=3><rx></fn> kB/s <icon=extra/up_arrow_1_14.xpm/> <fn=3><tx></fn> kB/s"
                              , "-L", "1000", "-H", "5000"
                              , "-w", "3"
                              ] 10
 
-        , Run Wireless "wlp6s0"  [ "-t" , "<fn=3><fc=orange>[ <essid> ] </fc></fn>"
+        , Run Wireless "wlp6s0"  [ "-t" , "<icon=extra/wifi-icon_16.xpm/> <fn=3><fc=orange>[ <essid> ] </fc></fn>"
                              ] 10
         -- time and date indicator 
         --   (%e = day of month, %b month name %a = day of week, %r = 12 hour format)
