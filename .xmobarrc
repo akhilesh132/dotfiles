@@ -19,9 +19,9 @@ Config {
         -- Disk usage 
          , Run DiskU          
                  [("/","<icon=extra/ssd_24_18.xpm/> /: <usedp>% <icon=extra/harddisk-icon_16.xpm/> "),
-                  ("/home/akhilesh/Alpha","A: <usedp>%"),
-                  ("/home/akhilesh/Bravo","B: <usedp>%"),
-                  ("/home/akhilesh/Charlie","C: <usedp>%")
+                  ("/home/akhilesh/Alpha","<fc=purple>A: </fc><usedp>%"),
+                  ("/home/akhilesh/Bravo","<fc=purple>B: </fc><usedp>%"),
+                  ("/home/akhilesh/Charlie","<fc=purple>C: </fc><usedp>%")
                  ] 
                  [ "-L","50", "-l", "grey"]
                  300
