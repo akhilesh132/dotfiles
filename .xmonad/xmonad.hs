@@ -24,7 +24,6 @@ import XMonad.Actions.Promote
 import XMonad.Actions.CycleWS
 import XMonad.Actions.CycleRecentWS
 import XMonad.Actions.CycleWindows
-import qualified XMonad.Actions.FlexibleResize as Flex
 import XMonad.Prompt
 import XMonad.Prompt.FuzzyMatch
 import XMonad.Prompt.ConfirmPrompt
@@ -52,7 +51,6 @@ main = do
         workspaces =      myWorkspaces,
         startupHook        = myStartupHook
       } `additionalKeysP` myAdditionalKeysP
-        `additionalMouseBindings` myAdditionalMouseBindings
 
 --Bind Mod to the Windows Key
 myModMask = mod4Mask
@@ -151,8 +149,8 @@ myXPConfig = def
 myAdditionalKeysP = [
   ("M-<Return>", promote),
   -- Replace dmenu with rofi
-  ("M-p", spawn "rofi -width 30 -show drun -theme ~/.config/rofi/themes/nord/nord.rasi"),
-  ("M-o", spawn "rofi -width 30 -show window -theme ~/.config/rofi/themes/nord/nord.rasi"),
+  ("M-p", spawn "rofi -width 30 -show drun"),
+  ("M-o", spawn "rofi -width 30 -show window"),
    -- Named Scratchpad bindings
   ("M-C-<Return>", namedScratchpadAction myScratchPads "dropdownTerminal"),
   -- Layout modifier bindings
@@ -187,14 +185,12 @@ myAdditionalKeysP = [
  -- Multimedia key bindings
  ("M-<Up>",                     spawn ("amixer -c 1 set 'Master' 5%+")),
  ("M-<Down>",                   spawn ("amixer -c 1 set 'Master' 5%-")),
- ("M-S-<Left>",                 spawn ("amixer -c 1 set 'Front' 5%-")),
- ("M-S-<Right>",                spawn ("amixer -c 1 set 'Front' 5%+")),
  ("M-S-<Up>",                   spawn ("amixer set Capture 10%+")),
  ("M-S-<Down>",                 spawn ("amixer set Capture 10%-")),
- ("M-C-<Up>",                   spawn ("xbrightness +1000 +1000 +1000")),
- ("M-C-<Down>",                 spawn ("xbrightness -1000 -1000 -1000")),
- ("M-M1-<Down>",                spawn ("xbrightness -500 -1500 -2000")),
- ("M-M1-<Up>",                  spawn ("xbrightness +500 +1500 +2000")),
+ ("M-C-<Up>",                   spawn ("xbrightness +500 +500 +500")),
+ ("M-C-<Down>",                 spawn ("xbrightness -500 -500 -500")),
+ ("M-M1-<Down>",                spawn ("xbrightness -100 -300 -500")),
+ ("M-M1-<Up>",                  spawn ("xbrightness +100 +300 +500")),
  ("<XF86AudioLowerVolume>",     spawn ("amixer -c 1 set 'Master' 5%-")),
  ("<XF86AudioRaiseVolume>",     spawn ("amixer -c 1 set 'Master' 5%+")),
  ("<XF86AudioMute>",            spawn ("amixer -q sset Master toggle")),
@@ -202,9 +198,5 @@ myAdditionalKeysP = [
  ("<XF86AudioStop>",     spawn ("playerctl stop")),
  ("<XF86AudioPrev>",     spawn ("playerctl previous")),
  ("<XF86AudioNext>",     spawn ("playerctl next"))
- ]
-
-myAdditionalMouseBindings = [
-  ((myModMask, button3), (\w -> focus w >> Flex.mouseResizeWindow w))
  ]
 
