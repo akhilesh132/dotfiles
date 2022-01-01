@@ -34,8 +34,6 @@ import XMonad.Wallpaper
 
 
 main = do
-    spawn "${HOME}/.bin/picom --experimental-backends -b &"
-    spawn "xbrightness 65535"
     xmproc <- spawnPipe "xmobar ~/.xmobarrc"
     setRandomWallpaper [ "$HOME/Wallpapers" ]
     xmonad $fullscreenSupport $docks $ewmh desktopConfig
@@ -132,7 +130,9 @@ floatingWindowsHook = composeAll [
 
 myHandleEventHook = fullscreenEventHook
 
-myStartupHook = return()
+myStartupHook = do
+    spawn "${HOME}/.bin/picom --experimental-backends -b &"
+    spawn "xbrightness 65535"
 
 --  Customize the way 'XMonad.Prompt' looks and behaves.
 --  It's a great replacement for dzen.
