@@ -16,6 +16,7 @@ alias mynixos='git --git-dir=$HOME/.myNixOs --work-tree=/'
 
 # PATH variable
 export PATH=$PATH:${HOME}/.Xscripts
+export PATH="$PATH:/home/akhilesh/.local/share/coursier/bin"
 
 # https://github.com/starship/starship
 # startship prompt

@@ -58,15 +58,8 @@ myTerminal = "alacritty"
 myFocusFollowsMouse = True
 myClickJustFocuses = False
 
-myLayoutHook =  onWorkspace "1"
-                ( tallLayout
-                  |||fullLayout 
-                  ||| mirrorTallLayout 
-                )
-              $ onWorkspace "2" 
-                ( fullLayout
-                  ||| tallLayout 
-                )
+myLayoutHook =  onWorkspace "1" ( tallLayout |||fullLayout ||| mirrorTallLayout )
+              $ onWorkspace "2" ( fullLayout ||| tallLayout )
               $ onWorkspace "5" floatingLayout
               $ tallLayout ||| fullLayout
  
