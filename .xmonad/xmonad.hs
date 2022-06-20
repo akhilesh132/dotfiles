@@ -30,12 +30,10 @@ import XMonad.Prompt.ConfirmPrompt
 import XMonad.Prompt.Shell
 import XMonad.Prompt.Window
 import qualified  XMonad.StackSet as W
-import XMonad.Wallpaper
 
 
 main = do
     xmproc <- spawnPipe "xmobar ~/.xmobarrc"
-    setRandomWallpaper [ "$HOME/Wallpapers" ]
     xmonad $fullscreenSupport $docks $ewmh desktopConfig
       { terminal   =      myTerminal,
         borderWidth =     myBorderWidth,
