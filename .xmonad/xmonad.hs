@@ -122,7 +122,7 @@ floatingWindowsHook = composeAll [
 myHandleEventHook = fullscreenEventHook
 
 myStartupHook = do
-    spawn "${HOME}/.bin/picom --experimental-backends -b &"
+    spawn "picom --experimental-backends -b &"
     spawn "xbrightness 65535"
 
 --  Customize the way 'XMonad.Prompt' looks and behaves.
